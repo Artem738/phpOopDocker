@@ -1,20 +1,20 @@
 <?php
 
 
-require_once 'shapes_calculator/Validators/MathValidator.php';
-require_once 'shapes_calculator/Validators/MyValidator.php';
-require_once 'shapes_calculator/Interfaces/ShapeInterface.php';
-require_once 'shapes_calculator/Shapes/TwoDimensionalShapes/Circle.php';
-require_once 'shapes_calculator/Shapes/TwoDimensionalShapes/AbstractShapes/FourSquareShape.php';
-require_once 'shapes_calculator/Shapes/TwoDimensionalShapes/Square.php';
-require_once 'shapes_calculator/Shapes/TwoDimensionalShapes/Rectangle.php';
-require_once 'shapes_calculator/Shapes/TwoDimensionalShapes/Triangle.php';
-require_once 'shapes_calculator/Interfaces/ThreeDimensionalShapeInterface.php';
-require_once 'shapes_calculator/Shapes/ThreeDimensionalShapes/AbstractShapes/TreeDimensionalShape.php';
-require_once 'shapes_calculator/Shapes/ThreeDimensionalShapes/AbstractShapes/RectangularTreeDimensionalShape.php';
-require_once 'shapes_calculator/Shapes/ThreeDimensionalShapes/Cuboid.php';
-require_once 'shapes_calculator/Shapes/ThreeDimensionalShapes/Cube.php';
-require_once 'shapes_calculator/Shapes/ThreeDimensionalShapes/Cone.php';
+require_once 'Validators/MathValidator.php';
+require_once 'Validators/MyValidator.php';
+require_once 'Interfaces/ShapeInterface.php';
+require_once 'Shapes/TwoDimensionalShapes/Circle.php';
+require_once 'Shapes/TwoDimensionalShapes/AbstractShapes/FourSquareShape.php';
+require_once 'Shapes/TwoDimensionalShapes/Square.php';
+require_once 'Shapes/TwoDimensionalShapes/Rectangle.php';
+require_once 'Shapes/TwoDimensionalShapes/Triangle.php';
+require_once 'Interfaces/ThreeDimensionalShapeInterface.php';
+require_once 'Shapes/ThreeDimensionalShapes/AbstractShapes/TreeDimensionalShape.php';
+require_once 'Shapes/ThreeDimensionalShapes/AbstractShapes/RectangularTreeDimensionalShape.php';
+require_once 'Shapes/ThreeDimensionalShapes/Cuboid.php';
+require_once 'Shapes/ThreeDimensionalShapes/Cube.php';
+require_once 'Shapes/ThreeDimensionalShapes/Cone.php';
 
 use ShapesСalculator\Interfaces\ShapeInterface;
 use ShapesСalculator\Interfaces\ThreeDimensionalShapeInterface;

@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8f2e830-0fe5-4d5a-b429-bd7330da4432" name="Changes" comment="" />
+    <list default="true" id="e8f2e830-0fe5-4d5a-b429-bd7330da4432" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/bin/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/bin/shapes_calculator/main.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +14,9 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpServers">
     <servers>
@@ -46,9 +51,12 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ArtRyzen\Documents\phpOopDocker\bin\shapes_calculator\Shapes\ThreeDimensionalShapes" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ArtRyzen\Documents\phpOopDocker\bin\shapes_calculator" />
+    </key>
   </component>
   <component name="RunManager">
-    <configuration name="main.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/bin/main.php">
+    <configuration name="main.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/bin/shapes_calculator/main.php">
       <method v="2" />
     </configuration>
   </component>
@@ -63,7 +71,7 @@
       <workItem from="1692797031674" duration="16603000" />
       <workItem from="1692895828807" duration="975000" />
       <workItem from="1692981410897" duration="5130000" />
-      <workItem from="1693058939209" duration="4203000" />
+      <workItem from="1693058939209" duration="4568000" />
     </task>
     <servers />
   </component>
