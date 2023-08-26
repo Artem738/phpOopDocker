@@ -26,7 +26,6 @@ use ShapesСalculator\Shapes\TwoDimensionalShapes\Rectangle;
 use ShapesСalculator\Shapes\TwoDimensionalShapes\Square;
 use ShapesСalculator\Shapes\TwoDimensionalShapes\Triangle;
 
-
 function twoDimensionalCalculation(ShapeInterface $shape): void
 {
     echo $shape->getShapeInfo() . PHP_EOL;
