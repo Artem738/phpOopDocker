@@ -1,20 +1,20 @@
 <?php
 
-
-require_once '/srv/src/app/src/ShapesCalculator/Validators/MathValidator.php';
-require_once '/srv/src/app/src/ShapesCalculator/Validators/MyValidator.php';
-require_once '/srv/src/app/src/ShapesCalculator/Interfaces/ShapeInterface.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/TwoDimensionalShapes/Circle.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/TwoDimensionalShapes/AbstractShapes/FourSquareShape.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/TwoDimensionalShapes/Square.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/TwoDimensionalShapes/Rectangle.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/TwoDimensionalShapes/Triangle.php';
-require_once '/srv/src/app/src/ShapesCalculator/Interfaces/ThreeDimensionalShapeInterface.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/ThreeDimensionalShapes/AbstractShapes/TreeDimensionalShape.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/ThreeDimensionalShapes/AbstractShapes/RectangularTreeDimensionalShape.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/ThreeDimensionalShapes/Cuboid.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/ThreeDimensionalShapes/Cube.php';
-require_once '/srv/src/app/src/ShapesCalculator/Shapes/ThreeDimensionalShapes/Cone.php';
+// якщо запускати як :/srv/src/app# php bin/shapes_calc.php    то не працює
+require_once '../src/ShapesCalculator/Validators/MathValidator.php';
+require_once '../src/ShapesCalculator/Validators/MyValidator.php';
+require_once '../src/ShapesCalculator/Interfaces/ShapeInterface.php';
+require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/Circle.php';
+require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/AbstractShapes/FourSquareShape.php';
+require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/Square.php';
+require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/Rectangle.php';
+require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/Triangle.php';
+require_once '../src/ShapesCalculator/Interfaces/ThreeDimensionalShapeInterface.php';
+require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/AbstractShapes/TreeDimensionalShape.php';
+require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/AbstractShapes/RectangularTreeDimensionalShape.php';
+require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/Cuboid.php';
+require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/Cube.php';
+require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/Cone.php';
 
 use ShapesСalculator\Interfaces\ShapeInterface;
 use ShapesСalculator\Interfaces\ThreeDimensionalShapeInterface;
