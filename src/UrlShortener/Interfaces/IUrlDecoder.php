@@ -4,9 +4,9 @@ namespace UrlShortner\Interfaces;
 interface IUrlDecoder
 {
     /**
-     * @param string $code
-     * @throws \InvalidArgumentException
+     * @param string $shortCode
      * @return string
+     *@throws \InvalidArgumentException
      */
-    public function decode(string $code): string; //Розшифровуємо, de - усунення та зворотній процес. (декодизація...)
+    public function decode(string $shortCode): string; //Розшифровуємо, de - усунення та зворотній процес. (декодизація...)
 }
