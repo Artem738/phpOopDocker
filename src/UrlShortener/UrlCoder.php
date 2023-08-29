@@ -4,9 +4,10 @@ namespace UrlShortener;
 
 class UrlCoder
 {
-    public function encodeUrl(string $url): string
+    public function encodeUrl(string $url, int $shortCodeLength): string
     {
-        return md5($url);
+        $md5Hash = md5($url);
+        return substr($md5Hash, 0, $shortCodeLength);
     }
 
     public function decodeUrl(string $url): string
