@@ -2,7 +2,7 @@
 
 namespace UrlShortener;
 
-class MyCoder
+class UrlCoder
 {
     public function encodeUrl(string $url): string
     {

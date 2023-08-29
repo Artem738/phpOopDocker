@@ -9,7 +9,7 @@ class UrlProcessor implements IUrlEncoder, IUrlDecoder
 {
     private UrlValidator $urlValidator;
     private FileRepository $repository;
-    private MyCoder $myCoder;
+    private UrlCoder $myCoder;
 
     private int $shortCodeLength = 10;
 
@@ -17,7 +17,7 @@ class UrlProcessor implements IUrlEncoder, IUrlDecoder
     {
         $this->urlValidator = new UrlValidator();
         $this->repository = new FileRepository();
-        $this->myCoder = new MyCoder();
+        $this->myCoder = new UrlCoder();
     }
 
     public function encode(string $url): string

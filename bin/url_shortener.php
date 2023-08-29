@@ -5,13 +5,13 @@ require_once '../src/UrlShortener/Interfaces/IUrlEncoder.php';
 require_once '../src/UrlShortener/Interfaces/IUrlDecoder.php';
 require_once '../src/UrlShortener/UrlProcessor.php';
 require_once '../src/UrlShortener/FileRepository.php';
-require_once '../src/UrlShortener/MyCoder.php';
+require_once '../src/UrlShortener/UrlCoder.php';
 require_once '../src/UrlShortener/UrlValidator.php';
 
 use UrlShortener\UrlProcessor;
 
 $encoder = new UrlProcessor();
-$encodedUrl = $encoder->encode("http://google.com");
+$encodedUrl = $encoder->encode("https://www.google.com/");
 echo "Encoded URL: $encodedUrl".PHP_EOL;
 
 $decoder = new UrlProcessor();
