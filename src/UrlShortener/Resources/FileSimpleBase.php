@@ -2,16 +2,10 @@
 
 namespace UrlShortener\Resources;
 
-use UrlShortener\AppConfig;
-
 class FileSimpleBase
 {
-    private string $fileStoragePath;
+    private string $fileStoragePath = __DIR__ . '/../../../data/short_url_data/';
 
-    public function __construct()
-    {
-        $this->fileStoragePath = AppConfig::SHORT_URLS_FILE_STORAGE_PATH;
-    }
 
     public function storeFile(string $filePath, string $content)
     {
