@@ -15,15 +15,13 @@ class Repository
 
     public function store(string $url, string $encodedUrl)
     {
-        $this->fileBase->createDirectoryIfNotExists('');
-        $filePath = $encodedUrl;
-        $this->fileBase->storeFile($filePath, $url);
+        $this->fileBase->createDirectoryIfNotExists();
+        $this->fileBase->storeFile($encodedUrl, $url);
     }
 
     public function retrieve(string $code): ?string
     {
-        $filePath = $code;
-        return $this->fileBase->getFileContent($filePath);
+        return $this->fileBase->getFileContent($code);
     }
 
 }

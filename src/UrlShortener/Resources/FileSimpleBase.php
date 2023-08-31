@@ -27,10 +27,10 @@ class FileSimpleBase
         return null;
     }
 
-    public function createDirectoryIfNotExists(string $directoryPath)
+    public function createDirectoryIfNotExists(): void
     {
-        if (!is_dir($this->fileStoragePath . $directoryPath)) {
-            mkdir($this->fileStoragePath . $directoryPath, 0777, true);
+        if (!is_dir($this->fileStoragePath)) {
+            mkdir($this->fileStoragePath, 0777, true);
         }
     }
 }

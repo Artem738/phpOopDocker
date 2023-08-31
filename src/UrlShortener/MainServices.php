@@ -3,6 +3,8 @@
 namespace UrlShortener;
 
 use UrlShortener\Resources\Repository;
+use UrlShortener\Validators\UrlValidator;
+
 
 class MainServices
 {

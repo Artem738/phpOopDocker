@@ -1,7 +1,6 @@
 <?php
 
-namespace UrlShortener;
-
+namespace UrlShortener\Validators;
 class UrlValidator
 {
 
@@ -41,7 +40,7 @@ class UrlValidator
         }
 
         if ($headers && strpos($headers[0], '301')) {
-            return "Редірект 301 - Вибачте, сервіс не приймає посилання з редіректорм";
+            return "Редірект 301 - Вибачте, сервіс не приймає посилання з редіректом";
         }
 
         if ($headers && strpos($headers[0], '404')) {

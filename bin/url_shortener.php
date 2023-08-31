@@ -9,7 +9,7 @@ require_once '../src/UrlShortener/UrlProcessor.php';
 require_once '../src/UrlShortener/Resources/Repository.php';
 require_once '../src/UrlShortener/Resources/FileSimpleBase.php';
 require_once '../src/UrlShortener/UrlCoder.php';
-require_once '../src/UrlShortener/UrlValidator.php';
+require_once '../src/UrlShortener/Validators/UrlValidator.php';
 require_once '../src/UrlShortener/MainServices.php';
 
 
