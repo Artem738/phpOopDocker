@@ -1,6 +1,6 @@
 <?php
 
-namespace UrlShortner\Interfaces;
+namespace UrlShortener\Interfaces;
 interface IUrlEncoder
 {
     /**

@@ -1,5 +1,6 @@
 <?php
 
+namespace UrlShortener\Resources;
 
 use UrlShortener\AppConfig;
 

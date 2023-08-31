@@ -2,7 +2,6 @@
 
 namespace UrlShortener\Resources;
 
-use FileSimpleBase;
 
 class Repository
 {
