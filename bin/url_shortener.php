@@ -1,18 +1,6 @@
 <?php
 
 
-//require_once  __DIR__ .'/../utils/autoloader.php';
-
-
-//require_once '../src/UrlShortener/AppConfig.php';
-//require_once '../src/UrlShortener/Interfaces/IUrlEncoder.php';
-//require_once '../src/UrlShortener/Interfaces/IUrlDecoder.php';
-//require_once '../src/UrlShortener/UrlProcessor.php';
-//require_once '../src/UrlShortener/Resources/Repository.php';
-//require_once '../src/UrlShortener/Resources/FileSimpleBase.php';
-//require_once '../src/UrlShortener/UrlCoder.php';
-//require_once '../src/UrlShortener/Validators/UrlValidator.php';
-//require_once '../src/UrlShortener/MainServices.php';
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $loader = new Nette\Loaders\RobotLoader;
