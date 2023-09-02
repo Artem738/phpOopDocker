@@ -87,6 +87,11 @@ return array (
       0 => '/srv/src/app/src/UrlShortener/Interfaces/IUrlEncoder.php',
       1 => 1693662535,
     ),
+    'UrlShortener\\MainServices' => 
+    array (
+      0 => '/srv/src/app/src/UrlShortener/MainServices.php',
+      1 => 1693665728,
+    ),
     'Resources\\FileSimpleBase' => 
     array (
       0 => '/srv/src/app/src/UrlShortener/Resources/FileSimpleBase.php',
@@ -95,34 +100,26 @@ return array (
     'Resources\\Repository' => 
     array (
       0 => '/srv/src/app/src/UrlShortener/Resources/Repository.php',
-      1 => 1693662535,
+      1 => 1693665895,
     ),
     'UrlShortener\\UrlCoder' => 
     array (
       0 => '/srv/src/app/src/UrlShortener/UrlCoder.php',
       1 => 1693325728,
     ),
-    'Validators\\UrlValidator' => 
-    array (
-      0 => '/srv/src/app/src/UrlShortener/Validators/UrlValidator.php',
-      1 => 1693662535,
-    ),
-    'UrlShortener\\MainServices' => 
-    array (
-      0 => '/srv/src/app/src/UrlShortener/MainServices.php',
-      1 => 1693665728,
-    ),
     'UrlShortener\\UrlProcessor' => 
     array (
       0 => '/srv/src/app/src/UrlShortener/UrlProcessor.php',
       1 => 1693665753,
     ),
+    'Validators\\UrlValidator' => 
+    array (
+      0 => '/srv/src/app/src/UrlShortener/Validators/UrlValidator.php',
+      1 => 1693662535,
+    ),
   ),
   1 => 
   array (
-    'UrlShortener\\MainServices' => 1,
-    'UrlCoder' => 1,
-    'MainServices' => 1,
   ),
   2 => 
   array (

@@ -1,21 +1,5 @@
 <?php
 
-// якщо запускати як :/srv/src/app# php bin/shapes_calc.php    то не працює
-require_once '../src/ShapesCalculator/Validators/MathValidator.php';
-require_once '../src/ShapesCalculator/Validators/MyValidator.php';
-require_once '../src/ShapesCalculator/Interfaces/ShapeInterface.php';
-require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/Circle.php';
-require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/AbstractShapes/FourSquareShape.php';
-require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/Square.php';
-require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/Rectangle.php';
-require_once '../src/ShapesCalculator/Shapes/TwoDimensionalShapes/Triangle.php';
-require_once '../src/ShapesCalculator/Interfaces/ThreeDimensionalShapeInterface.php';
-require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/AbstractShapes/TreeDimensionalShape.php';
-require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/AbstractShapes/RectangularTreeDimensionalShape.php';
-require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/Cuboid.php';
-require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/Cube.php';
-require_once '../src/ShapesCalculator/Shapes/ThreeDimensionalShapes/Cone.php';
-
 use ShapesСalculator\Interfaces\ShapeInterface;
 use ShapesСalculator\Interfaces\ThreeDimensionalShapeInterface;
 use ShapesСalculator\Shapes\ThreeDimensionalShapes\Cone;
@@ -25,6 +9,12 @@ use ShapesСalculator\Shapes\TwoDimensionalShapes\Circle;
 use ShapesСalculator\Shapes\TwoDimensionalShapes\Rectangle;
 use ShapesСalculator\Shapes\TwoDimensionalShapes\Square;
 use ShapesСalculator\Shapes\TwoDimensionalShapes\Triangle;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+$loader = new Nette\Loaders\RobotLoader;
+$loader->addDirectory(__DIR__ . '/../src'); // путь к вашим классам
+$loader->setTempDirectory(__DIR__ . '/../temp/robot_loader'); // путь к временной директории
+$loader->register();
 
 function twoDimensionalCalculation(ShapeInterface $shape): void
 {
