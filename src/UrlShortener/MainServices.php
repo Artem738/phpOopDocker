@@ -2,21 +2,24 @@
 
 namespace UrlShortener;
 
-use Resources\Repository;
+
+use Interfaces\IRepository;
+use Resources\FileRepository;
+use Resources\SymfonyFileRepository;
 use Validators\UrlValidator;
 
 
 class MainServices
 {
 
+    private IRepository $repository;
     private UrlValidator $urlValidator;
-    private Repository $repository;
     private UrlCoder $urlCoder;
 
     public function __construct()
     {
         $this->urlValidator = new UrlValidator();
-        $this->repository = new Repository();
+        $this->repository = new SymfonyFileRepository();
         $this->urlCoder = new UrlCoder();
     }
 

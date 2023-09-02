@@ -2,10 +2,9 @@
 
 namespace Resources;
 
-
 use Interfaces\IRepository;
 
-class Repository implements IRepository
+class FileRepository implements IRepository
 {
     private FileSimpleBase $fileBase;
 
@@ -17,7 +16,7 @@ class Repository implements IRepository
     public function store(string $url, string $encodedUrl): bool
     {
         $this->fileBase->createDirectoryIfNotExists();
-        return $this->fileBase->storeFile($encodedUrl, $url);
+        return  $this->fileBase->storeFile($encodedUrl, $url);
     }
 
     public function retrieve(string $code): ?string

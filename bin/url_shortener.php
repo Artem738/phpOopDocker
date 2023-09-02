@@ -1,7 +1,5 @@
 <?php
 
-
-
 require_once __DIR__ . '/../vendor/autoload.php';
 $loader = new Nette\Loaders\RobotLoader;
 $loader->addDirectory(__DIR__ . '/../src'); // шлях до класів

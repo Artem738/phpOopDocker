@@ -5,7 +5,7 @@
     "require": {
         "nette/robot-loader": "^4.0",
         "guzzlehttp/guzzle": "^7.8",
-        "league/flysystem": "^3.15"
+        "symfony/filesystem": "^6.3.0"
     },
     "license": "MIT",
     "autoload": {
