@@ -4,8 +4,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $loader = new Nette\Loaders\RobotLoader;
-$loader->addDirectory(__DIR__ . '/../src'); // путь к вашим классам
-$loader->setTempDirectory(__DIR__ . '/../temp'); // путь к временной директории
+$loader->addDirectory(__DIR__ . '/../src'); // шлях до класів
+$loader->setTempDirectory(__DIR__ . '/../temp'); // шлях до темп
 $loader->register();
 
 
