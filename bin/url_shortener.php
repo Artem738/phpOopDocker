@@ -1,7 +1,7 @@
 <?php
 
 
-require_once  __DIR__ .'/../utils/autoloader.php';
+//require_once  __DIR__ .'/../utils/autoloader.php';
 
 
 //require_once '../src/UrlShortener/AppConfig.php';
@@ -13,6 +13,12 @@ require_once  __DIR__ .'/../utils/autoloader.php';
 //require_once '../src/UrlShortener/UrlCoder.php';
 //require_once '../src/UrlShortener/Validators/UrlValidator.php';
 //require_once '../src/UrlShortener/MainServices.php';
+
+require_once __DIR__ . '/../vendor/autoload.php';
+$loader = new Nette\Loaders\RobotLoader;
+$loader->addDirectory(__DIR__ . '/../src'); // путь к вашим классам
+$loader->setTempDirectory(__DIR__ . '/../temp'); // путь к временной директории
+$loader->register();
 
 
 

@@ -1,9 +1,11 @@
 <?php
 
-namespace UrlShortener\Resources;
+namespace Resources;
 
 
-class Repository
+use Interfaces\IRepository;
+
+class Repository implements IRepository
 {
     private FileSimpleBase $fileBase;
 
@@ -12,10 +14,10 @@ class Repository
         $this->fileBase = new FileSimpleBase;
     }
 
-    public function store(string $url, string $encodedUrl)
+    public function store(string $url, string $encodedUrl): bool
     {
         $this->fileBase->createDirectoryIfNotExists();
-        $this->fileBase->storeFile($encodedUrl, $url);
+        return $this->fileBase->storeFile($encodedUrl, $url);
     }
 
     public function retrieve(string $code): ?string

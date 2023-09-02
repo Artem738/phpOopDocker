@@ -1,0 +1,21 @@
+{
+    "name": "root/app",
+    "description": "UrlShortner and other...",
+    "type": "project",
+    "require": {
+        "nette/robot-loader": "^4.0",
+        "guzzlehttp/guzzle": "^7.8"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Root\\App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Artem"
+        }
+    ],
+    "minimum-stability": "stable"
+}

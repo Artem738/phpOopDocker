@@ -2,8 +2,9 @@
 
 namespace UrlShortener;
 
-use UrlShortener\Interfaces\IUrlDecoder;
-use UrlShortener\Interfaces\IUrlEncoder;
+use Interfaces\IUrlDecoder;
+use Interfaces\IUrlEncoder;
+
 
 
 class UrlProcessor implements IUrlEncoder, IUrlDecoder

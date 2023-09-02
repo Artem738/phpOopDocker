@@ -1,15 +1,15 @@
 <?php
 
-namespace UrlShortener\Resources;
+namespace Resources;
 
 class FileSimpleBase
 {
     private string $fileStoragePath = __DIR__ . '/../../../data/short_url_data/';
 
 
-    public function storeFile(string $filePath, string $content)
+    public function storeFile(string $filePath, string $content): bool
     {
-        file_put_contents($this->fileStoragePath . $filePath, $content);
+        return (bool) file_put_contents($this->fileStoragePath . $filePath, $content);
     }
 
     public function getFileContent(string $filePath): ?string

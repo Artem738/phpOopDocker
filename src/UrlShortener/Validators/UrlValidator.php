@@ -1,6 +1,6 @@
 <?php
 
-namespace UrlShortener\Validators;
+namespace Validators;
 class UrlValidator
 {
 
