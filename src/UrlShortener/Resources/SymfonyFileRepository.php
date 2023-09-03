@@ -2,15 +2,16 @@
 
 namespace Resources;
 
-use Interfaces\IRepository;
+use Interfaces\IFileRepository;
 use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
 
-class SymfonyFileRepository implements IRepository
+class SymfonyFileRepository implements IFileRepository
 {
     private SymfonyFilesystem $filesystem;
 
     public function __construct()
     {
+        echo "Використовуємо сучасну Symfony File System...".PHP_EOL;
         $this->filesystem = new SymfonyFilesystem();
     }
 

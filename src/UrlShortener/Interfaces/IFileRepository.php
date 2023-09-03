@@ -2,7 +2,7 @@
 
 namespace Interfaces;
 
-interface IRepository
+interface IFileRepository
 {
     const SHORT_URL_DATA_DIR = __DIR__ . '/../../../data/short_url_data/'; // багато місць для цього, поки буде поки тут.
 

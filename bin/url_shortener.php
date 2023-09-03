@@ -8,8 +8,10 @@ $loader->register();
 
 
 use Core\UrlProcessor;
+use Resources\SimpleFileRepository;
+use Resources\SymfonyFileRepository;
 
-function consoleDialog(UrlProcessor $urlProcessor): void
+function consoleDialog(): void
 {
     echo PHP_EOL . PHP_EOL . "Ласкаво просимо до програми скорочення URL!" . PHP_EOL;
 
@@ -22,17 +24,43 @@ function consoleDialog(UrlProcessor $urlProcessor): void
 
     switch ($option) {
         case '1':
+            echo "Оберіть файловий репозиторій:" . PHP_EOL;
+            echo "1. SymfonyFileRepository" . PHP_EOL;
+            echo "2. FileRepository" . PHP_EOL;
+
+            $repoOption = readline("Введіть тип файлового репозиторія: ");
+
+            switch ($repoOption) {
+                case '1':
+                    $repository = new SymfonyFileRepository();
+                    break;
+                case '2':
+                    $repository = new SimpleFileRepository();
+                    break;
+                default:
+                    echo "Невірний вибір репозиторія. Використовується репозиторій за замовчуванням (SymfonyFileRepository)." . PHP_EOL;
+                    $repository = new SymfonyFileRepository();
+                    break;
+            }
+
             $urlToEncode = readline("Введіть URL для кодування: ");
             $codeLength = readline("Введіть бажану довжину коду URL: ");
 
             $urlToEncode = empty($urlToEncode) ? 'https://neuroeconomics.org/' : $urlToEncode; //Нарешті нормальна наука...
             $codeLength = empty($codeLength) ? 10 : (int)$codeLength;
 
+            $urlProcessor = new UrlProcessor($repository);
+
             $urlProcessor->setShortCodeMaxLength($codeLength);
+            $urlProcessor->setRepository($repository);
+
             $encodedUrl = $urlProcessor->encode($urlToEncode);
             echo "Закодований URL: $encodedUrl" . PHP_EOL;
             break;
         case '2':
+            //$repository = new SymfonyFileRepository();
+            $repository = new SimpleFileRepository();
+            $urlProcessor = new UrlProcessor($repository);
             $encodedUrl = readline("Введіть закодований URL для декодування: ");
             $decodedUrl = $urlProcessor->decode($encodedUrl);
             echo "Декодований URL: $decodedUrl" . PHP_EOL;
@@ -45,13 +73,19 @@ function consoleDialog(UrlProcessor $urlProcessor): void
             break;
     }
 }
+
+
+
 function main ()
 {
-    $urlProcessor = new UrlProcessor();
+
     while (true) {
-        consoleDialog($urlProcessor);
+        consoleDialog();
     }
 }
+
+
+
 
 main();
 exit();

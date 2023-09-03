@@ -2,15 +2,17 @@
 
 namespace Resources;
 
-use Interfaces\IRepository;
+use Interfaces\IFileRepository;
+use LocalVendor\FileSimpleBase;
 
-class FileRepository implements IRepository
+class SimpleFileRepository implements IFileRepository
 {
     private FileSimpleBase $fileBase;
 
-    public function __construct($dirPath)
+    public function __construct()
     {
-        $this->fileBase = new FileSimpleBase($dirPath);
+        echo "Використовуємо простий Simple File Base...".PHP_EOL;
+        $this->fileBase = new FileSimpleBase(self::SHORT_URL_DATA_DIR);
     }
 
     public function store(string $url, string $encodedUrl): bool
