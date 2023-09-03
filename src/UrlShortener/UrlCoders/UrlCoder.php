@@ -2,7 +2,9 @@
 
 namespace UrlCoders;
 
-class UrlCoder
+use Interfaces\IUrlCoder;
+
+class UrlCoder implements IUrlCoder
 {
     public function encodeUrl(string $url, int $shortCodeLength): string
     {
