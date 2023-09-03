@@ -6,6 +6,7 @@ namespace Core;
 use Interfaces\IRepository;
 use Interfaces\IUrlValidator;
 use Resources\FileRepository;
+use Resources\SymfonyFileRepository;
 use UrlCoders\UrlCoder;
 use Validators\UrlValidator;
 
@@ -19,9 +20,12 @@ class MainServices
 
     public function __construct()
     {
+        // Зручно перемикаємо різні бази у одному місці, але можне це робити на кла
+
+        $this->repository = new SymfonyFileRepository();
+        //$this->repository = new FileRepository(__DIR__ . '/../../../data/short_url_data/');
+
         $this->urlValidator = new UrlValidator();
-        //$this->repository = new SymfonyFileRepository();
-        $this->repository = new FileRepository(__DIR__ . '/../../../data/short_url_data/');
         $this->urlCoder = new UrlCoder();
     }
 

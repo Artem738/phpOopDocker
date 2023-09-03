@@ -22,10 +22,8 @@ class UrlProcessor implements IUrlEncoder, IUrlDecoder
         if ($shortCodeInputLength <= 0) {
             throw new \InvalidArgumentException(PHP_EOL . "Довжина короткого коду не може бути 0, або відємне." . PHP_EOL);
         }
-        if ($shortCodeInputLength > 10) {
-            $shortCodeInputLength = 10;
-        }
-        $this->shortCodeMaxLength = $shortCodeInputLength;
+
+        $this->shortCodeMaxLength = min($shortCodeInputLength, $this->shortCodeMaxLength);
     }
 
     public function encode(string $url): string
@@ -37,6 +35,5 @@ class UrlProcessor implements IUrlEncoder, IUrlDecoder
     {
         return $this->mainServices->decode($shortCode);
     }
-
 
 }
