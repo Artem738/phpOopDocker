@@ -19,7 +19,8 @@ class MainServices
     public function __construct()
     {
         $this->urlValidator = new UrlValidator();
-        $this->repository = new SymfonyFileRepository();
+        //$this->repository = new SymfonyFileRepository();
+        $this->repository = new FileRepository(__DIR__ . '/../../../data/short_url_data/');
         $this->urlCoder = new UrlCoder();
     }
 

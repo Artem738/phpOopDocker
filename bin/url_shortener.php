@@ -29,7 +29,11 @@ while (true) {
         case '1':
             $urlToEncode = readline("Введіть URL для кодування: ");
             $codeLength = readline("Введіть бажану довжину коду URL: ");
-            $urlProcessor->setShortCodeLength(empty($codeLength) ? 10 : (int)$codeLength);
+
+            $urlToEncode = empty($urlToEncode) ? 'https://neuroeconomics.org/' : $urlToEncode; //Дуже цікава тема! Завдяки цій науці, я зараз на цих курсах.
+            $codeLength = empty($codeLength) ? 10 : (int)$codeLength;
+
+            $urlProcessor->setShortCodeLength($codeLength);
             $encodedUrl = $urlProcessor->encode($urlToEncode);
             echo "Закодований URL: $encodedUrl" . PHP_EOL;
             break;

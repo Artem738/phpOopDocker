@@ -4,12 +4,15 @@ namespace Resources;
 
 class FileSimpleBase
 {
-    private string $fileStoragePath = __DIR__ . '/../../../data/short_url_data/';
 
+
+    public function __construct(protected string $fileStoragePath)
+    {
+    }
 
     public function storeFile(string $filePath, string $content): bool
     {
-        return (bool) file_put_contents($this->fileStoragePath . $filePath, $content);
+        return (bool)file_put_contents($this->fileStoragePath . $filePath, $content);
     }
 
     public function getFileContent(string $filePath): ?string
@@ -22,10 +25,11 @@ class FileSimpleBase
         return null;
     }
 
-    public function createDirectoryIfNotExists(): void
+    public function createDirectoryIfNotExists(): bool
     {
         if (!is_dir($this->fileStoragePath)) {
-            mkdir($this->fileStoragePath, 0777, true);
+            return mkdir($this->fileStoragePath, 0777, true);
         }
+        return true; // exist
     }
 }
