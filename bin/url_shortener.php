@@ -9,30 +9,26 @@ $loader->register();
 
 use Core\UrlProcessor;
 
-$urlProcessor = new UrlProcessor();
-
-echo "Ласкаво просимо до програми URL-кодування та декодування!" . PHP_EOL;
-
-while (true) {
+function consoleDialog(UrlProcessor $urlProcessor): void
+{
+    echo PHP_EOL . PHP_EOL . "Ласкаво просимо до програми скорочення URL!" . PHP_EOL;
 
     echo "Будь ласка, оберіть опцію:" . PHP_EOL;
     echo "1. Закодувати URL" . PHP_EOL;
     echo "2. Декодувати URL" . PHP_EOL;
     echo "3. Вийти з програми" . PHP_EOL;
 
-
     $option = readline("Введіть номер опції: ");
-
 
     switch ($option) {
         case '1':
             $urlToEncode = readline("Введіть URL для кодування: ");
             $codeLength = readline("Введіть бажану довжину коду URL: ");
 
-            $urlToEncode = empty($urlToEncode) ? 'https://neuroeconomics.org/' : $urlToEncode; //Дуже цікава тема! Завдяки цій науці, я зараз на цих курсах.
+            $urlToEncode = empty($urlToEncode) ? 'https://neuroeconomics.org/' : $urlToEncode; //Нарешті нормальна наука...
             $codeLength = empty($codeLength) ? 10 : (int)$codeLength;
 
-            $urlProcessor->setShortCodeLength($codeLength);
+            $urlProcessor->setShortCodeMaxLength($codeLength);
             $encodedUrl = $urlProcessor->encode($urlToEncode);
             echo "Закодований URL: $encodedUrl" . PHP_EOL;
             break;
@@ -45,7 +41,17 @@ while (true) {
             echo "Дякуємо за використання програми!" . PHP_EOL;
             exit;
         default:
-            echo "Невірний вибір опції. Будь ласка, виберіть коректну опцію." . PHP_EOL;
+            echo "Невірний вибір опції. Будь ласка, оберіть коректну опцію." . PHP_EOL;
             break;
     }
 }
+function main ()
+{
+    $urlProcessor = new UrlProcessor();
+    while (true) {
+        consoleDialog($urlProcessor);
+    }
+}
+
+main();
+exit();

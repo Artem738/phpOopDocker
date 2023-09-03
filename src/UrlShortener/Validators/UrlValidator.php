@@ -32,6 +32,8 @@ class UrlValidator implements IUrlValidator
         return false;
     }
 
+
+    // Старий метод поки залишаємо, OOP це зручно дозволяє
     private function httpUrlValidator(string $url): string
     {
 
