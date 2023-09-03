@@ -7,8 +7,7 @@ $loader->setTempDirectory(__DIR__ . '/../temp'); // шлях до темп
 $loader->register();
 
 
-
-use UrlShortener\UrlProcessor;
+use Core\UrlProcessor;
 
 $urlProcessor = new UrlProcessor();
 

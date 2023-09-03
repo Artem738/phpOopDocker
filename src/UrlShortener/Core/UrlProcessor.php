@@ -1,10 +1,9 @@
 <?php
 
-namespace UrlShortener;
+namespace Core;
 
 use Interfaces\IUrlDecoder;
 use Interfaces\IUrlEncoder;
-
 
 
 class UrlProcessor implements IUrlEncoder, IUrlDecoder

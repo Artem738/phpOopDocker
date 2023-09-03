@@ -8,9 +8,9 @@ class FileRepository implements IRepository
 {
     private FileSimpleBase $fileBase;
 
-    public function __construct()
+    public function __construct($dirPath)
     {
-        $this->fileBase = new FileSimpleBase(__DIR__ . '/../../../data/short_url_data/');
+        $this->fileBase = new FileSimpleBase($dirPath);
     }
 
     public function store(string $url, string $encodedUrl): bool

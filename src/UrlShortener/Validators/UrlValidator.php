@@ -1,7 +1,9 @@
 <?php
 
 namespace Validators;
-class UrlValidator
+use Interfaces\IUrlValidator;
+
+class UrlValidator implements IUrlValidator
 {
 
     public function findAllUrlProblems(string $url): string

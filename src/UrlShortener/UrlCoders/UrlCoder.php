@@ -1,6 +1,6 @@
 <?php
 
-namespace UrlShortener;
+namespace UrlCoders;
 
 class UrlCoder
 {
