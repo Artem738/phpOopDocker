@@ -5,7 +5,6 @@ namespace LocalVendor;
 class FileSimpleBase
 {
 
-
     public function __construct(protected string $fileStoragePath)
     {
     }

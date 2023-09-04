@@ -29,7 +29,7 @@ function consoleDialog(): void
             $repository = new SimpleFileRepository();
             break;
         default:
-            echo "Невірний вибір репозиторія. Використовується репозиторій за замовчуванням (SymfonyFileRepository)." . PHP_EOL;
+            echo "Відсутній вибір репозиторія. Використовується репозиторій за замовчуванням (SymfonyFileRepository)." . PHP_EOL;
             $repository = new SymfonyFileRepository();
             break;
     }
@@ -52,10 +52,9 @@ function consoleDialog(): void
                 echo("Введіть бажану довжину коду URL: ");
                 $codeLength = trim(fgets(STDIN));
 
-                $urlToEncode = empty($urlToEncode) ? 'https://neuroeconomics.org/' : $urlToEncode;
-                $codeLength = empty($codeLength) ? 10 : (int)$codeLength;
+                $urlToEncode = empty($urlToEncode) ? 'https://www.google.com/' : $urlToEncode;
 
-                $urlProcessor->setShortCodeMaxLength($codeLength);
+                $urlProcessor->setShortCodeLength($codeLength);
                 $encodedUrl = $urlProcessor->encode($urlToEncode);
                 echo "Закодований URL: $encodedUrl" . PHP_EOL;
                 break;
@@ -76,7 +75,7 @@ function consoleDialog(): void
 }
 
 
-function main()
+function main(): void
 {
     consoleDialog();
 }

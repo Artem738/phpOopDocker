@@ -9,6 +9,7 @@ use Interfaces\IUrlValidator;
 use Resources\SimpleFileRepository;
 use Resources\SymfonyFileRepository;
 use UrlCoders\UrlCoder;
+use Validators\GuzzleUrlValidator;
 use Validators\UrlValidator;
 
 
@@ -24,7 +25,9 @@ class MainServices
 
         $this->repository = $inputRepositoryType;
 
-        $this->urlValidator = new UrlValidator();
+        $this->urlValidator = new GuzzleUrlValidator();
+        //$this->urlValidator = new UrlValidator();
+
         $this->urlCoder = new UrlCoder();
     }
 
