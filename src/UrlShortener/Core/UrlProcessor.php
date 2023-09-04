@@ -24,7 +24,7 @@ class UrlProcessor implements IUrlEncoder, IUrlDecoder
 
     public function setShortCodeLength(?int $codeLength = null): void
     {
-        if ($codeLength == null || empty($codeLength) || $codeLength < UrlLengthEnum::MIN_LENGTH || $codeLength > UrlLengthEnum::MAX_LENGTH) {
+        if (empty($codeLength) || $codeLength < UrlLengthEnum::MIN_LENGTH || $codeLength > UrlLengthEnum::MAX_LENGTH) {
             $this->shortCodeMaxLength = UrlLengthEnum::MAX_LENGTH;
         } else {
             $this->shortCodeMaxLength = $codeLength;

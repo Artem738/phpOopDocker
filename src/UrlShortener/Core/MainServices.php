@@ -2,7 +2,6 @@
 
 namespace Core;
 
-
 use Interfaces\IFileRepository;
 use Interfaces\IUrlCoder;
 use Interfaces\IUrlValidator;
@@ -25,6 +24,7 @@ class MainServices
 
         $this->repository = $inputRepositoryType;
 
+        // Ручний перемикач валідаторів...
         $this->urlValidator = new GuzzleUrlValidator();
         //$this->urlValidator = new UrlValidator();
 

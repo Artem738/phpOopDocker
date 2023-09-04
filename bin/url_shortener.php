@@ -50,7 +50,7 @@ function consoleDialog(): void
                 echo("Введіть URL для кодування: ");
                 $urlToEncode = trim(fgets(STDIN));
                 echo("Введіть бажану довжину коду URL: ");
-                $codeLength = trim(fgets(STDIN));
+                $codeLength = (int)trim(fgets(STDIN));
 
                 $urlToEncode = empty($urlToEncode) ? 'https://www.google.com/' : $urlToEncode;
 
