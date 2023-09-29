@@ -172,18 +172,11 @@ class InteractiveCommandHandler implements InputInterface
 
 class CalculatorProcessor
 {
-    protected ICalculatorInterface $calculator;
-    protected INotifierInterface $notifier;
-    protected ILoggerInterface $logger;
-
     public function __construct(
-        ICalculatorInterface $calculator,
-        INotifierInterface   $notifier,
-        ILoggerInterface     $logger
+        protected ICalculatorInterface $calculator,
+        protected INotifierInterface   $notifier,
+        protected ILoggerInterface     $logger,
     ) {
-        $this->calculator = $calculator;
-        $this->notifier = $notifier;
-        $this->logger = $logger;
     }
 
     public function calculate(string $operation, $number1, $number2): int|float
@@ -205,7 +198,7 @@ class CalculatorProcessor
     }
 }
 
-/* Створення IoC контейнера  */
+/* Використання, Створення DI/IoC контейнера  */
 
 $container = new DiServiceConstructor();
 
