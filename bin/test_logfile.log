@@ -22,3 +22,5 @@ Operation: add, Number1: 2, Number2: 3, Result: 5
 Operation: add, Number1: 2, Number2: 4, Result: 6
 Operation: multi, Number1: 4, Number2: 4, Result: 16
 Operation: multi, Number1: 4, Number2: 4, Result: 16
+Operation: add, Number1: 3, Number2: 3, Result: 6
+Operation: multi, Number1: 5, Number2: 5, Result: 25

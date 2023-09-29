@@ -3,16 +3,17 @@
 /// Interfaces
 interface ILoggerInterface
 {
-    public function log($message);
+    public function log(string $message);
 }
 
 interface INotifierInterface
 {
-    public function send($message);
+    public function send(string $message);
 }
 
 interface ICalculatorInterface
 {
+    // поки не встановлюємо int чи float
     public function add($a, $b);
 
     public function multiply($a, $b);
@@ -84,7 +85,7 @@ class FloatICalculator implements ICalculatorInterface
     }
 }
 
-class FileILogger implements ILoggerInterface
+class FileLogger implements ILoggerInterface
 {
 
     public function __construct(
@@ -92,7 +93,7 @@ class FileILogger implements ILoggerInterface
     ) {
     }
 
-    public function log($message): void
+    public function log(string $message): void
     {
         file_put_contents($this->filePath, $message . PHP_EOL, FILE_APPEND);
     }
@@ -100,7 +101,7 @@ class FileILogger implements ILoggerInterface
 
 class CliINotifier implements INotifierInterface
 {
-    public function send($message): void
+    public function send(string $message): void
     {
         echo $message . PHP_EOL;
     }
@@ -115,7 +116,7 @@ class TelegramINotifier implements INotifierInterface
     ) {
     }
 
-    public function send($message): void
+    public function send(string $message): void
     {
 
         echo "Message sent to Telegram: $message\n";
@@ -185,7 +186,7 @@ class CalculatorProcessor
         $this->logger = $logger;
     }
 
-    public function calculate(string $operation, $number1, $number2)
+    public function calculate(string $operation, $number1, $number2): int|float
     {
         $calculator = [
             ECalcOperations::ADD => fn() => $this->calculator->add($number1, $number2),
@@ -235,13 +236,13 @@ $container->bind(
 
 $container->bind(
     'TestLoggerContract', function () {
-    return new FileILogger('test_logfile.log');
+    return new FileLogger('test_logfile.log');
 }
 );
 
 $container->bind(
     'ProdLoggerContract', function () {
-    return new FileILogger('prod_logfile.log');
+    return new FileLogger('prod_logfile.log');
 }
 );
 
@@ -283,6 +284,7 @@ $container->bind(
 );
 
 /* Реалізація */
+//$processor = $container->make('IntCalcCLIProcessor');
 $processor = $container->make('FloatCalcInteractiveProcessor');
 $processor->handle($argv);
 
