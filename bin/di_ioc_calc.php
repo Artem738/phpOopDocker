@@ -18,6 +18,44 @@ interface ICalculatorInterface
     public function multiply($a, $b);
 }
 
+interface InputInterface
+{
+    public function handle(array $args);
+}
+
+/* ENUM  */
+
+enum ECalcOperations: string
+{
+    public const  ADD = 'add';
+    public const MULTIPLY = 'multiply';
+    public const MULTI = 'multi';
+
+    ///ECalcOperations::cases() не працює з константою.
+    public const TO_STR = 'add, multiply, multi';
+
+}
+
+
+/// Container builder !!!
+class DiServiceConstructor
+{
+    // Масив для зберігання прив'язок
+    private array $bindings = [];
+
+    // Метод для реєстрації прив'язки у контейнері
+    public function bind($abstract, $concrete): void
+    {
+        $this->bindings[$abstract] = $concrete;
+    }
+
+    // Метод для створення об'єкта на основі його абстракції
+    public function make($abstract)
+    {
+        return $this->bindings[$abstract]();
+    }
+}
+
 
 /// Classes
 class IntICalculator implements ICalculatorInterface
@@ -84,45 +122,8 @@ class TelegramINotifier implements INotifierInterface
     }
 }
 
-/// Container builder
-class IoCContainer
-{
-    // Масив для зберігання прив'язок
-    private array $bindings = [];
-
-    // Метод для реєстрації прив'язки у контейнері
-    public function bind($abstract, $concrete): void
-    {
-        $this->bindings[$abstract] = $concrete;
-    }
-
-    // Метод для створення об'єкта на основі його абстракції
-    public function make($abstract)
-    {
-        return $this->bindings[$abstract]();
-    }
-}
-
-/* ENUM  */
-
-enum ECalcOperations: string
-{
-
-    public const  ADD = 'add';
-    public const MULTIPLY = 'multiply';
-    public const MULTI = 'multi';
-
-    ///CalcOperations::cases() не працює з константою.
-    public const TO_STR = 'add, multiply, multi';
-
-}
 
 /* Processor  */
-
-interface InputInterface
-{
-    public function handle(array $args);
-}
 
 class CliCommandHandler implements InputInterface
 {
@@ -205,7 +206,7 @@ class CalculatorProcessor
 
 /* Створення IoC контейнера  */
 
-$container = new IoCContainer();
+$container = new DiServiceConstructor();
 
 // Контракти
 $container->bind(
