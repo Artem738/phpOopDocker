@@ -64,6 +64,9 @@ class DiServiceConstructor
     // Метод для створення об'єкта на основі його абстракції
     public function make($abstract)
     {
+        if (!isset($this->bindings[$abstract])) {
+            throw new \InvalidArgumentException("Unknown binding: $abstract");
+        }
         return $this->bindings[$abstract]();
     }
 }
@@ -211,17 +214,16 @@ class CalculatorProcessor
 
     public function calculate(string $operation, $number1, $number2): int|float
     {
-        $calculator = [
-            ECalcOperations::ADD => fn() => $this->calculator->add($number1, $number2),
-            // Дублюємо помноження, для простих юзерів
-            ECalcOperations::MULTIPLY => fn() => $this->calculator->multiply($number1, $number2),
-            ECalcOperations::MULTI => fn() => $this->calculator->multiply($number1, $number2),
-            ECalcOperations::SUBTRACT => fn() => $this->calculator->subtract($number1, $number2),
-        ];
-
-        $matchResult = $calculator[$operation] ?? die("Unknown operation: $operation. Supported operations: " . ECalcOperations::TO_STR . PHP_EOL);
-
-        $result = $matchResult();
+        $result = match ($operation) {
+            ECalcOperations::ADD => $this->calculator->add($number1, $number2),
+            ECalcOperations::MULTIPLY, ECalcOperations::MULTI => $this->calculator->multiply($number1, $number2),
+            ECalcOperations::SUBTRACT => $this->calculator->subtract($number1, $number2),
+            ECalcOperations::DIVIDE => $this->calculator->divide($number1, $number2),
+            default => throw new \InvalidArgumentException(
+                PHP_EOL . "Unknown operation: $operation. 
+            Supported operations: " . ECalcOperations::TO_STR . PHP_EOL
+            )
+        };
         $this->logger->log("Operation: {$operation}, Number1: {$number1}, Number2: {$number2}, Result: {$result}");
         $this->notifier->send("Result of {$operation}: {$result}");
 

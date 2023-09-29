@@ -1,2 +1,5 @@
 Operation: add, Number1: 12, Number2: 22, Result: 34
 Operation: sub, Number1: 1, Number2: 11, Result: -10
+Operation: divide, Number1: 5, Number2: 10, Result: 0.5
+Operation: add, Number1: 4, Number2: 4, Result: 8
+Operation: sub, Number1: 3, Number2: 5, Result: -2
