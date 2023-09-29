@@ -5,7 +5,8 @@
     "require": {
         "nette/robot-loader": "^4.0",
         "guzzlehttp/guzzle": "^7.8",
-        "symfony/filesystem": "^6.3.0"
+        "symfony/filesystem": "^6.3.0",
+        "psr/container": "^2.0"
     },
     "license": "MIT",
     "autoload": {

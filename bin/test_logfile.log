@@ -1,0 +1,8 @@
+Operation: add, Number1: 4, Number2: 4, Result: 8
+Operation: sub, Number1: 3, Number2: 3, Result: 0
+Operation: divide, Number1: 5, Number2: 1, Result: 5
+Operation: divide, Number1: 5, Number2: 1, Result: 5
+Operation: divide, Number1: 5, Number2: 1, Result: 5
+Operation: divide, Number1: 5, Number2: 1, Result: 5
+Operation: divide, Number1: 5, Number2: 2, Result: 2
+Operation: divide, Number1: 100, Number2: 2, Result: 50
