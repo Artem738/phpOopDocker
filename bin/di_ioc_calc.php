@@ -17,6 +17,10 @@ interface ICalculatorInterface
     public function add($a, $b);
 
     public function multiply($a, $b);
+
+    public function subtract($a, $b);
+
+    public function divide($a, $b);
 }
 
 interface InputInterface
@@ -28,12 +32,19 @@ interface InputInterface
 
 enum ECalcOperations: string
 {
-    public const  ADD = 'add';
+    public const ADD = 'add';
     public const MULTIPLY = 'multiply';
     public const MULTI = 'multi';
+    public const SUBTRACT = 'sub';
+    public const DIVIDE = 'divide';
 
     ///ECalcOperations::cases() не працює з константою.
-    public const TO_STR = 'add, multiply, multi';
+    public const TO_STR =
+        self::ADD . ', ' .
+        self::MULTIPLY . ', ' .
+        self::MULTI . ', ' .
+        self::SUBTRACT . ', ' .
+        self::DIVIDE;
 
 }
 
@@ -70,6 +81,16 @@ class IntICalculator implements ICalculatorInterface
     {
         return $a * $b;
     }
+
+    public function subtract($a, $b): int
+    {
+        return $a - $b;
+    }
+
+    public function divide($a, $b): int
+    {
+        return $a / $b;
+    }
 }
 
 class FloatICalculator implements ICalculatorInterface
@@ -82,6 +103,16 @@ class FloatICalculator implements ICalculatorInterface
     public function multiply($a, $b): float
     {
         return $a * $b;
+    }
+
+    public function subtract($a, $b): float
+    {
+        return $a - $b;
+    }
+
+    public function divide($a, $b): float
+    {
+        return $a / $b;
     }
 }
 
@@ -107,7 +138,7 @@ class CliINotifier implements INotifierInterface
     }
 }
 
-class TelegramINotifier implements INotifierInterface
+class TelegramNotifier implements INotifierInterface
 {
 
     public function __construct(
@@ -118,7 +149,6 @@ class TelegramINotifier implements INotifierInterface
 
     public function send(string $message): void
     {
-
         echo "Message sent to Telegram: $message\n";
     }
 }
@@ -186,6 +216,7 @@ class CalculatorProcessor
             // Дублюємо помноження, для простих юзерів
             ECalcOperations::MULTIPLY => fn() => $this->calculator->multiply($number1, $number2),
             ECalcOperations::MULTI => fn() => $this->calculator->multiply($number1, $number2),
+            ECalcOperations::SUBTRACT => fn() => $this->calculator->subtract($number1, $number2),
         ];
 
         $matchResult = $calculator[$operation] ?? die("Unknown operation: $operation. Supported operations: " . ECalcOperations::TO_STR . PHP_EOL);
@@ -223,7 +254,7 @@ $container->bind(
 
 $container->bind(
     'TelegramNotifierContract', function () {
-    return new TelegramINotifier('SomeToken123', 'someChatId123');
+    return new TelegramNotifier('SomeToken123', 'someChatId123');
 }
 );
 
