@@ -1,0 +1,9 @@
+Operation: add, Number1: 2, Number2: 3, Result: 5
+Operation: multi, Number1: 4, Number2: 4, Result: 16
+Operation: sub, Number1: 123, Number2: 123, Result: 0
+Operation: divide, Number1: 4, Number2: 2, Result: 2
+Operation: add, Number1: 11, Number2: 11, Result: 22
+Operation: add, Number1: 22, Number2: 222, Result: 244
+Operation: add, Number1: 2, Number2: 2, Result: 4
+Operation: add, Number1: 2, Number2: 2, Result: 4
+Operation: add, Number1: 2, Number2: 2, Result: 4
