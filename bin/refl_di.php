@@ -65,38 +65,50 @@ class Container implements ContainerInterface
         $this->parameters[$subtype] = $params;
     }
 
-
     /**
-     * @throws \ReflectionException
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @throws NotFoundException
+     * @throws ContainerException
      */
     public function get(string $className)
     {
-        $ref = new ReflectionClass($className);
-        $contr = $ref->getConstructor();
-        $deps = [];
-
-        if ($contr !== null) {
-            $attrs = $contr->getParameters();
-
-            foreach ($attrs as $attr) {
-                $name = $attr->getType()->getName();
-                if (isset($this->binds[$name])) {
-                    $name = $this->binds[$name];
-                }
-
-                if (isset($this->parameters[$name])) {
-                    $deps[] = new $name(...$this->parameters[$name]);
-                } else {
-                    $deps[] = $this->get($name);
-                }
-            }
+        if (!class_exists($className)) {
+            throw new NotFoundException("Class {$className} not found.");
         }
 
-        return new $className(...$deps);
-    }
+        try {
+            $ref = new ReflectionClass($className);
+            $contr = $ref->getConstructor();
+            $deps = [];
 
+            if ($contr !== null) {
+                $attrs = $contr->getParameters();
+
+                foreach ($attrs as $attr) {
+                    $name = $attr->getType() ? $attr->getType()->getName() : null;
+
+                    if (!$name) {
+                        throw new ContainerException("The parameter {$attr->getName()} in class {$className} does not have a type.");
+                    }
+
+                    if (isset($this->binds[$name])) {
+                        $name = $this->binds[$name];
+                    }
+
+                    if (isset($this->parameters[$name])) {
+                        $deps[] = new $name(...$this->parameters[$name]);
+                    } else {
+                        $deps[] = $this->get($name);
+                    }
+                }
+            }
+
+            return new $className(...$deps);
+        } catch (\ReflectionException $e) {
+            throw new ContainerException("Error occurred during reflection.", 0, $e);
+        } catch (\Throwable $e) {
+            throw new ContainerException("Error occurred while resolving dependencies or instantiating {$className}.", 0, $e);
+        }
+    }
 
     public function has(string $id): bool
     {
@@ -113,6 +125,7 @@ class ContainerException extends \Exception implements ContainerExceptionInterfa
 {
     // Custom logic or properties if needed.
 }
+
 
 
 class IntICalculator implements ICalculatorInterface
