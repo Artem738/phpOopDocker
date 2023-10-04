@@ -3,3 +3,8 @@ Operation: multi, Number1: 2, Number2: 5, Result: 10
 Operation: add, Number1: 2, Number2: 5, Result: 7
 Operation: add, Number1: 2, Number2: 5, Result: 7
 Operation: add, Number1: 2, Number2: 5, Result: 7
+Operation: add, Number1: 4, Number2: 3, Result: 7
+Operation: add, Number1: 4, Number2: 5, Result: 9
+Operation: add, Number1: 4, Number2: 5, Result: 9
+Operation: add, Number1: 4, Number2: 5, Result: 9
+Operation: add, Number1: 2, Number2: 4, Result: 6

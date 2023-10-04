@@ -16,3 +16,4 @@ enum ECalcOperations: string
         return implode(', ', array_column(self::cases(), 'value'));
     }
 }
+

@@ -2,15 +2,16 @@
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
-//$loader = new Nette\Loaders\RobotLoader;
-//$loader->addDirectory(__DIR__ . '/../src'); // шлях до класів
-//$loader->setTempDirectory(__DIR__ . '/../temp'); // шлях до темп
-//$loader->register();
 
 
 
 use App\Core\Di\Container;
+use App\SmartCalculator\Enums\ECalcOperations;
+use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Interfaces\ICalculatorInterface;
+use App\SmartCalculator\Interfaces\ILoggerInterface;
+use App\SmartCalculator\Interfaces\INotifierInterface;
+use App\SmartCalculator\Interfaces\InputInterface;
 
 
 class IntICalculator implements ICalculatorInterface
@@ -178,6 +179,8 @@ class CalculatorProcessor
         return $result;
     }
 }
+
+echo EGreetings::bigAppName->value;
 
 
 $container = new Container();
