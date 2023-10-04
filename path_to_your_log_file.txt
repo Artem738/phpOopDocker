@@ -8,3 +8,19 @@ Operation: add, Number1: 4, Number2: 5, Result: 9
 Operation: add, Number1: 4, Number2: 5, Result: 9
 Operation: add, Number1: 4, Number2: 5, Result: 9
 Operation: add, Number1: 2, Number2: 4, Result: 6
+Operation: add, Number1: 2, Number2: 4, Result: 6
+Operation: add, Number1: 3, Number2: 4, Result: 7
+Operation: sub, Number1: 1 2, Number2: 2, Result: -1
+Operation: add, Number1: 4, Number2: 5, Result: 9
+Operation: add, Number1: 2, Number2: 3, Result: 5
+Operation: add, Number1: 2, Number2: 4, Result: 6
+Operation: add, Number1: 2, Number2: 5, Result: 7
+Operation: add, Number1: 2, Number2: 5, Result: 7
+Operation: add, Number1: 2, Number2: 5, Result: 7
+Operation: add, Number1: 2, Number2: 5, Result: 7
+Operation: sub, Number1: 1, Number2: 4, Result: -3
+Operation: divide, Number1: 15, Number2: 7, Result: 2.1428571428571
+Operation: divide, Number1: 15, Number2: 7, Result: 2.1428571428571
+Operation: divide, Number1: 15, Number2: 7, Result: 2.1428571428571
+Operation: divide, Number1: 15, Number2: 7, Result: 2.1428571428571
+Operation: add, Number1: 2, Number2: 5, Result: 7

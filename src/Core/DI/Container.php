@@ -9,65 +9,75 @@ use Psr\Container\ContainerInterface;
 
 class Container implements ContainerInterface
 {
-    protected array $binds = [];
-    protected array $parameters = [];
+    protected array $bindings = [];
+    protected array $instances = [];
 
-    public function bind(string $type, string $subtype, array $params = []): void
+    public function bind(string $abstract, string $concrete, array $parameters = []): void
     {
-        $this->binds[$type] = $subtype;
-        $this->parameters[$subtype] = $params;
+        $this->bindings[$abstract] = ['concrete' => $concrete, 'parameters' => $parameters];
     }
 
-    public function get(string $className)
+    public function instance(string $abstract, $instance): void
+    {
+        $this->instances[$abstract] = $instance;
+    }
+
+    public function get(string $abstract)
+    {
+        if (isset($this->instances[$abstract])) {
+            return $this->instances[$abstract];
+        }
+
+        if (!isset($this->bindings[$abstract])) {
+            throw new NotFoundException("No binding found for {$abstract}.");
+        }
+
+        $concrete = $this->bindings[$abstract]['concrete'];
+        $parameters = $this->bindings[$abstract]['parameters'];
+
+        $object = $this->instantiate($concrete, $parameters);
+        $this->instances[$abstract] = $object;
+
+        return $object;
+    }
+
+    protected function instantiate(string $concrete, array $parameters = [])
     {
         try {
-            $ref = new ReflectionClass($className);
-            $constructor = $ref->getConstructor();
-
-            if ($constructor === null) {
-                return new $className;
+            $reflector = new ReflectionClass($concrete);
+            if (!$reflector->isInstantiable()) {
+                throw new ContainerException("Class {$concrete} is not instantiable.");
             }
 
-            $dependencies = $this->resolveDependencies($constructor->getParameters());
+            $constructor = $reflector->getConstructor();
+            if (is_null($constructor)) {
+                return new $concrete;
+            }
 
-            return $ref->newInstanceArgs($dependencies);
-        } catch (\ReflectionException) {
-            throw new NotFoundException("Class {$className} not found.");
-        } catch (\Throwable $e) {
-            throw new ContainerException("Error occurred while resolving dependencies or instantiating {$className}.", 0, $e);
+            $dependencies = [];
+            foreach ($constructor->getParameters() as $parameter) {
+                $dependency = $parameter->getType() && !$parameter->getType()->isBuiltin()
+                    ? new ReflectionClass($parameter->getType()->getName())
+                    : null;
+                if ($dependency === null) {
+                    if (isset($parameters[$parameter->getName()])) {
+                        $dependencies[] = $parameters[$parameter->getName()];
+                    } else {
+                        throw new ContainerException("Cannot resolve class dependency {$parameter->getName()} for {$concrete}.");
+                    }
+                } else {
+                    $dependencies[] = $this->get($dependency->getName());
+                }
+            }
+
+            return $reflector->newInstanceArgs($dependencies);
+        } catch (\ReflectionException $e) {
+            throw new ContainerException("Error occurred while creating {$concrete}.", 0, $e);
         }
     }
 
     public function has(string $id): bool
     {
-        return isset($this->binds[$id]);
+        return isset($this->bindings[$id]) || isset($this->instances[$id]);
     }
-
-    protected function resolveDependencies(array $parameters)
-    {
-        $dependencies = [];
-
-        foreach ($parameters as $parameter) {
-            $type = $parameter->getType();
-            $name = $type ? $type->getName() : null;
-
-            if (!$name) {
-                throw new ContainerException("The parameter {$parameter->getName()} does not have a type.");
-            }
-
-            if (isset($this->binds[$name])) {
-                $name = $this->binds[$name];
-            }
-
-            if (isset($this->parameters[$name])) {
-                $dependencies[] = new $name(...$this->parameters[$name]);
-            } else {
-                $dependencies[] = $this->get($name);
-            }
-        }
-
-        return $dependencies;
-    }
-
-
 }
