@@ -1,0 +1,5 @@
+Operation: multi, Number1: 2, Number2: 5, Result: 10
+Operation: multi, Number1: 2, Number2: 5, Result: 10
+Operation: add, Number1: 2, Number2: 5, Result: 7
+Operation: add, Number1: 2, Number2: 5, Result: 7
+Operation: add, Number1: 2, Number2: 5, Result: 7

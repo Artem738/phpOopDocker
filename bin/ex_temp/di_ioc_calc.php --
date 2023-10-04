@@ -1,6 +1,12 @@
 <?php
 
+namespace test04;
+
 require_once __DIR__ . '/../vendor/autoload.php';
+$loader = new Nette\Loaders\RobotLoader;
+$loader->addDirectory(__DIR__ . '/../src'); // шлях до класів
+$loader->setTempDirectory(__DIR__ . '/../temp'); // шлях до темп
+$loader->register();
 
 
 use Psr\Container\ContainerInterface;
@@ -39,30 +45,59 @@ interface InputInterface
 
 enum ECalcOperations: string
 {
-    case ADD = 'add';
-    case MULTIPLY = 'multiply';
-    case MULTI = 'multi';
-    case SUBTRACT = 'sub';
-    case DIVIDE = 'divide';
+    public const ADD = 'add';
+    public const MULTIPLY = 'multiply';
+    public const MULTI = 'multi';
+    public const SUBTRACT = 'sub';
+    public const DIVIDE = 'divide';
 
-    public static function allToString(): string
-    {
-        return implode(', ', array_column(self::cases(), 'value'));
-    }
+    // ECalcOperations::cases() не працює з константою.
+    public const TO_STR =
+        self::ADD . ', ' .
+        self::MULTIPLY . ', ' .
+        self::MULTI . ', ' .
+        self::SUBTRACT . ', ' .
+        self::DIVIDE;
 }
 
+/**
+ * Клас IoCContainer представляє собою контейнер залежностей, що дозволяє здійснювати Inversion of Control (IoC).
+ * Цей контейнер дозволяє зв'язувати абстрактні визначення служб з їх конкретними реалізаціями та отримувати ці служби.
+ *
+ * Що таке IoC (Inversion of Control)?
+ * Це принцип, коли потік виконання програми контролюється не головною програмою, а зовнішніми компонентами.
+ *
+ * Що таке DI (Dependency Injection)?
+ * Це конкретний спосіб реалізації IoC. За допомогою DI залежності подаються об'єкту ззовні, замість того, щоб об'єкт їх створював самостійно.
+ */
 class IoCContainer implements ContainerInterface
 {
-
+    /**
+     * @var callable[] Асоціативний масив, де ключ - це ім'я абстрактного визначення,
+     * а значення - це конкретна функція, яка повертає об'єкт даного визначення.
+     */
     private array $bindings = [];
 
-
+    /**
+     * Зв'язує абстрактне визначення із конкретною реалізацією.
+     *
+     * @param string $abstract Абстрактне визначення - назва або ключ сервісу.
+     * @param callable $concrete Конкретна реалізація - це функція, яка при виклику повертає об'єкт сервісу.
+     */
     public function bind(string $abstract, callable $concrete): void
     {
         $this->bindings[$abstract] = $concrete;
     }
 
-
+    /**
+     * Отримує сервіс з контейнера.
+     *
+     * @param string $id Ідентифікатор сервісу для отримання.
+     * @return mixed Сервіс.
+     *
+     * @throws NotFoundException Якщо сервіс із зазначеним ID-im'ям відсутній у контейнері.
+     * @throws ContainerException При виникненні будь-якої помилки під час створення сервісу.
+     */
     public function get(string $id): mixed
     {
         if (!$this->has($id)) {
@@ -76,13 +111,18 @@ class IoCContainer implements ContainerInterface
         }
     }
 
-
+    /**
+     * Перевіряє, чи існує сервіс у контейнері.
+     *
+     * @param string $id Ідентифікатор сервісу для перевірки.
+     * @return bool True, якщо сервіс існує в контейнері, false - в іншому випадку.
+     */
     public function has(string $id): bool
     {
         return isset($this->bindings[$id]);
     }
 
-
+    // наступного разу - Symfony Dependency Injection чи PHP-DI ...
 }
 
 
@@ -96,7 +136,7 @@ class ContainerException extends \Exception implements ContainerExceptionInterfa
     // Custom logic or properties if needed.
 }
 
-
+// Classes
 class IntICalculator implements ICalculatorInterface
 {
     public function add($a, $b): int
@@ -188,6 +228,8 @@ class TelegramNotifier implements INotifierInterface
     }
 }
 
+/* Processor  */
+
 class CliCommandHandler implements InputInterface
 {
     public function __construct(
@@ -199,7 +241,7 @@ class CliCommandHandler implements InputInterface
     {
         if (count($args) < 4) {
             echo("  Usage: {$args[0]} <operation> <number1> <number2>" . PHP_EOL .
-                "  Доступні операції: " . ECalcOperations::allToString() . PHP_EOL);
+                "  Доступні операції: " . ECalcOperations::TO_STR . PHP_EOL);
             exit();
         }
 
@@ -210,7 +252,6 @@ class CliCommandHandler implements InputInterface
         return $this->processor->calculate($operation, $number1, $number2);
     }
 }
-
 class InteractiveCommandHandler implements InputInterface
 {
     public function __construct(
@@ -220,7 +261,7 @@ class InteractiveCommandHandler implements InputInterface
 
     public function handle(array $args = []): float|int
     {
-        $operation = $this->prompt("Введіть операцію (" . ECalcOperations::allToString() . "): ");
+        $operation = $this->prompt("Введіть операцію (" . ECalcOperations::TO_STR . "): ");
         $number1 = $this->prompt('Введіть перше число: ');
         $number2 = $this->prompt('Введіть друге число: ');
 
@@ -233,7 +274,6 @@ class InteractiveCommandHandler implements InputInterface
         return trim(fgets(STDIN));
     }
 }
-
 class CalculatorProcessor
 {
     public function __construct(
@@ -242,18 +282,16 @@ class CalculatorProcessor
         protected ILoggerInterface     $logger,
     ) {
     }
-
     public function calculate(string $operation, $number1, $number2): int|float
     {
-
         $result = match ($operation) {
-            ECalcOperations::ADD->value => $this->calculator->add($number1, $number2),
-            ECalcOperations::MULTIPLY->value, ECalcOperations::MULTI->value => $this->calculator->multiply($number1, $number2),
-            ECalcOperations::SUBTRACT->value => $this->calculator->subtract($number1, $number2),
-            ECalcOperations::DIVIDE->value => $this->calculator->divide($number1, $number2),
+            ECalcOperations::ADD => $this->calculator->add($number1, $number2),
+            ECalcOperations::MULTIPLY, ECalcOperations::MULTI => $this->calculator->multiply($number1, $number2),
+            ECalcOperations::SUBTRACT => $this->calculator->subtract($number1, $number2),
+            ECalcOperations::DIVIDE => $this->calculator->divide($number1, $number2),
             default => throw new \InvalidArgumentException(
                 PHP_EOL . "Unknown operation: $operation. 
-            Supported operations: " . ECalcOperations::allToString() . PHP_EOL
+            Supported operations: " . ECalcOperations::TO_STR . PHP_EOL
             )
         };
         $this->logger->log("Operation: {$operation}, Number1: {$number1}, Number2: {$number2}, Result: {$result}");
@@ -263,10 +301,17 @@ class CalculatorProcessor
     }
 }
 
+/*
+ * Створення та ініціалізація контейнера IoC:
+ * Використовуючи клас IoCContainer, ми створюємо об'єкт контейнера, що буде керувати нашими службами та їх залежностями.
+ */
 
 $container = new IoCContainer();
 
-
+/*
+ * Налаштування контейнера DI (IoC контейнера):
+ * Зв'язування контрактів із їх конкретними реалізаціями.
+ */
 $container->bind(
     'IntCalculatorContract', function () {
     return new IntICalculator();
@@ -303,6 +348,10 @@ $container->bind(
 }
 );
 
+/*
+ * Додаткове налаштування контейнера DI:
+ * Зв'язування обробників команд із їх залежностями.
+ */
 $container->bind(
     'FloatCalcCLIProcessor', function () use ($container) {
     return new CliCommandHandler(
@@ -342,8 +391,8 @@ $container->bind(
 /* Реалізація */
 
 try {
-    //$processor = $container->get('IntCalcCLIProcessor');
-    $processor = $container->get('FloatCalcInteractiveProcessor');
+    $processor = $container->get('IntCalcCLIProcessor');
+    //$processor = $container->get('FloatCalcInteractiveProcessor');
     $processor->handle($argv);
 } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
     echo "Error: " . $e->getMessage() . PHP_EOL;
