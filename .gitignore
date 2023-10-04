@@ -4,5 +4,6 @@ logs/
 public/.idea
 data/
 temp/
+logs/
 
 /vendor/

@@ -7,7 +7,43 @@ use App\Core\Exeptions\NotFoundException;
 use ReflectionClass;
 use Psr\Container\ContainerInterface;
 
-class Container implements ContainerInterface
+
+class Container implements ContainerInterface {
+    protected array $bindings = [];
+    protected array $instances = [];
+
+    public function bind(string $abstract, string $concrete, array $parameters = []): void {
+        $this->bindings[$abstract] = ['concrete' => $concrete, 'parameters' => $parameters];
+    }
+
+    public function get(string $abstract) {
+        if (isset($this->instances[$abstract])) {
+            return $this->instances[$abstract];
+        }
+
+        if (!isset($this->bindings[$abstract])) {
+            throw new NotFoundException("No binding found for {$abstract}.");
+        }
+
+        $concrete = $this->bindings[$abstract]['concrete'];
+        $parameters = $this->bindings[$abstract]['parameters'];
+
+        if (!$parameters) {
+            $this->instances[$abstract] = new $concrete;
+        } else {
+            $this->instances[$abstract] = new $concrete(...array_values($parameters));
+        }
+
+        return $this->instances[$abstract];
+    }
+
+    public function has(string $id): bool {
+        return isset($this->bindings[$id]) || isset($this->instances[$id]);
+    }
+}
+
+
+class Container_old implements ContainerInterface
 {
     protected array $bindings = [];
     protected array $instances = [];
