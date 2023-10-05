@@ -4,6 +4,7 @@ namespace App\SmartCalculator;
 
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\InputHandlers\CliCommandHandler;
+use App\SmartCalculator\InputHandlers\InteractiveCommandHandler;
 use App\SmartCalculator\Interfaces\ILoggerInterface;
 use App\SmartCalculator\Interfaces\INotifierInterface;
 use App\SmartCalculator\Interfaces\InputInterface;
@@ -68,4 +69,34 @@ class ContainerConfigurator
         }
         );
     }
+
+    public function bindInputHandler($container, string $inputHandler = 'cli'): void
+    {
+        switch ($inputHandler) {
+            case 'cli':
+                $container->bind(
+                    InputInterface::class, function () use ($container) {
+                    return new CliCommandHandler($container->get(CalculatorProcessor::class));
+                }
+                );
+                break;
+
+            case 'interactive':
+                $container->bind(
+                    InputInterface::class, function () use ($container) {
+                    return new InteractiveCommandHandler($container->get(CalculatorProcessor::class));
+                }
+                );
+                break;
+
+            default:
+                throw new \InvalidArgumentException("Unknown input handler: $inputHandler");
+        }
+    }
+
+    public function createInputHandler($container): InputInterface
+    {
+        return $container->get(InputInterface::class);
+    }
+
 }

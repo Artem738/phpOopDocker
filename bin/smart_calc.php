@@ -24,6 +24,8 @@ $configurator->bindBasicServices($container);
 $configurator->bindProcessors($container);
 $configurator->bindAdvancedServices($container);
 
+$configurator->bindInputHandler($container, 'cli'); //  'cli'  or 'interactive'
+
 // Реализация
 try {
     $processor = $container->get(InputInterface::class);
@@ -31,6 +33,7 @@ try {
 } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
     echo "Error: " . $e->getMessage() . PHP_EOL;
 }
+
 
 exit();
 
