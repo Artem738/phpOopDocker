@@ -1,17 +1,11 @@
 <?php
 
 use App\Core\Di\Container;
-use App\SmartCalculator\CalculatorProcessor;
-use App\SmartCalculator\Enums\ECalcOperations;
+use App\SmartCalculator\ContainerConfigurator;
 use App\SmartCalculator\Enums\EGreetings;
-use App\SmartCalculator\InputHandlers\CliCommandHandler;
-use App\SmartCalculator\Loggers\FileLogger;
-use App\SmartCalculator\Notifiers\CliINotifier;
-use App\SmartCalculator\Operations\AddOperation;
-use App\SmartCalculator\Operations\DivideOperation;
-use App\SmartCalculator\Operations\MultiplyOperation;
-use App\SmartCalculator\Operations\SubtractOperation;
-use App\SmartCalculator\ResultHandlers\ResultHandler;
+use App\SmartCalculator\Interfaces\InputInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -21,37 +15,24 @@ $dotenv->load();
 
 echo EGreetings::bigAppName->value;
 
+// Реализация
+
 $container = new Container();
+$configurator = new ContainerConfigurator();
 
-$container->set('logger', function()  {
-    return new FileLogger($_ENV['LOG_PATH']);
-});
+$configurator->bindBasicServices($container);
+$configurator->bindProcessors($container);
+$configurator->bindAdvancedServices($container);
 
-$container->set('notifier', function() {
-    return new CliINotifier();
-});
+// Реализация
+try {
+    $processor = $container->get(InputInterface::class);
+    $processor->handle($argv);
+} catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
+    echo "Error: " . $e->getMessage() . PHP_EOL;
+}
 
-$container->set('resultHandler', function($container) {
-    return new ResultHandler($container->get('notifier'), $container->get('logger'));
-});
-
-$container->set('calculatorProcessor', function($container) {
-    $operations = [
-        ECalcOperations::ADD->value => new AddOperation(),
-        ECalcOperations::SUBTRACT->value => new SubtractOperation(),
-        ECalcOperations::MULTIPLY->value => new MultiplyOperation(),
-        ECalcOperations::DIVIDE->value => new DivideOperation(),
-    ];
-    return new CalculatorProcessor($container->get('resultHandler'), $operations);
-});
-
-$container->set('commandHandler', function($container) {
-    return new CliCommandHandler($container->get('calculatorProcessor'));
-});
-
-$commandHandler = $container->get('commandHandler');
-$commandHandler->handle($argv);
-
+exit();
 
 //$logger = new FileLogger($_ENV['LOG_PATH']);
 //$notifier = new CliINotifier();

@@ -2,25 +2,62 @@
 
 namespace App\Core\Di;
 
-class Container
+use App\Core\Exeptions\ContainerException;
+use App\Core\Exeptions\NotFoundException;
+use Psr\Container\ContainerInterface;
+
+
+class Container implements ContainerInterface
 {
-    protected $services = [];
+    /**
+     * @var callable[] Асоціативний масив, де ключ - це ім'я абстрактного визначення,
+     * а значення - це конкретна функція, яка повертає об'єкт даного визначення.
+     */
+    private array $bindings = [];
 
-    public function set($name, $service)
+    /**
+     * Зв'язує абстрактне визначення із конкретною реалізацією.
+     *
+     * @param string $abstract Абстрактне визначення - назва або ключ сервісу.
+     * @param callable $concrete Конкретна реалізація - це функція, яка при виклику повертає об'єкт сервісу.
+     */
+    public function bind(string $abstract, callable $concrete): void
     {
-        $this->services[$name] = $service;
+        $this->bindings[$abstract] = $concrete;
     }
 
-    public function get($name)
+    /**
+     * Отримує сервіс з контейнера.
+     *
+     * @param string $id Ідентифікатор сервісу для отримання.
+     * @return mixed Сервіс.
+     *
+     * @throws NotFoundException Якщо сервіс із зазначеним ID-im'ям відсутній у контейнері.
+     * @throws ContainerException При виникненні будь-якої помилки під час створення сервісу.
+     */
+    public function get(string $id): mixed
     {
-        if (!isset($this->services[$name])) {
-            throw new \Exception("Service {$name} not found");
+        if (!$this->has($id)) {
+            throw new NotFoundException("Невідоме зв'язування: $id");
         }
-        // Если это замыкание, вызываем его, чтобы получить экземпляр сервиса
-        if (is_callable($this->services[$name])) {
-            return $this->services[$name]($this);
+
+        try {
+            return $this->bindings[$id]();
+        } catch (\Exception $e) {
+            throw new ContainerException($e->getMessage(), 0, $e);
         }
-        // Иначе просто возвращаем сервис
-        return $this->services[$name];
     }
+
+    /**
+     * Перевіряє, чи існує сервіс у контейнері.
+     *
+     * @param string $id Ідентифікатор сервісу для перевірки.
+     * @return bool True, якщо сервіс існує в контейнері, false - в іншому випадку.
+     */
+    public function has(string $id): bool
+    {
+        return isset($this->bindings[$id]);
+    }
+
+    // наступного разу - Symfony Dependency Injection чи PHP-DI ...
 }
