@@ -3,6 +3,7 @@
 use App\Core\Di\Container;
 use App\SmartCalculator\ContainerConfigurator;
 use App\SmartCalculator\Enums\EGreetings;
+use App\SmartCalculator\Enums\EInputTypes;
 use App\SmartCalculator\Interfaces\InputInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -20,11 +21,12 @@ echo EGreetings::bigAppName->value;
 $container = new Container();
 $configurator = new ContainerConfigurator();
 
-$configurator->bindBasicServices($container);
+$configurator->setLogger($container);
+$configurator->setNotifier($container);
 $configurator->bindProcessors($container);
 $configurator->bindAdvancedServices($container);
 
-$configurator->bindInputHandler($container, 'cli'); //  'cli'  or 'interactive'
+$configurator->setInputHandler($container, EInputTypes::interactive);
 
 // Реализация
 try {
