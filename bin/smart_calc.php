@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Di\Container;
 use App\SmartCalculator\CalculatorProcessor;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EGreetings;
@@ -20,22 +21,54 @@ $dotenv->load();
 
 echo EGreetings::bigAppName->value;
 
-$logger = new FileLogger($_ENV['LOG_PATH']);
-$notifier = new CliINotifier();
+$container = new Container();
 
-$resultHandler = new ResultHandler($notifier, $logger);
+$container->set('logger', function()  {
+    return new FileLogger($_ENV['LOG_PATH']);
+});
 
-$operations = [
-    ECalcOperations::ADD->value => new AddOperation(),
-    ECalcOperations::SUBTRACT->value => new SubtractOperation(),
-    ECalcOperations::MULTIPLY->value => new MultiplyOperation(),
-    ECalcOperations::DIVIDE->value => new DivideOperation(),
-];
+$container->set('notifier', function() {
+    return new CliINotifier();
+});
 
-$calculatorProcessor = new CalculatorProcessor($resultHandler, $operations);
+$container->set('resultHandler', function($container) {
+    return new ResultHandler($container->get('notifier'), $container->get('logger'));
+});
 
-$commandHandler = new CliCommandHandler($calculatorProcessor);
+$container->set('calculatorProcessor', function($container) {
+    $operations = [
+        ECalcOperations::ADD->value => new AddOperation(),
+        ECalcOperations::SUBTRACT->value => new SubtractOperation(),
+        ECalcOperations::MULTIPLY->value => new MultiplyOperation(),
+        ECalcOperations::DIVIDE->value => new DivideOperation(),
+    ];
+    return new CalculatorProcessor($container->get('resultHandler'), $operations);
+});
+
+$container->set('commandHandler', function($container) {
+    return new CliCommandHandler($container->get('calculatorProcessor'));
+});
+
+$commandHandler = $container->get('commandHandler');
 $commandHandler->handle($argv);
 
-exit();
+
+//$logger = new FileLogger($_ENV['LOG_PATH']);
+//$notifier = new CliINotifier();
+//
+//$resultHandler = new ResultHandler($notifier, $logger);
+//
+//$operations = [
+//    ECalcOperations::ADD->value => new AddOperation(),
+//    ECalcOperations::SUBTRACT->value => new SubtractOperation(),
+//    ECalcOperations::MULTIPLY->value => new MultiplyOperation(),
+//    ECalcOperations::DIVIDE->value => new DivideOperation(),
+//];
+//
+//$calculatorProcessor = new CalculatorProcessor($resultHandler, $operations);
+//
+//$commandHandler = new CliCommandHandler($calculatorProcessor);
+//$commandHandler->handle($argv);
+//
+//exit();
 

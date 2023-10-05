@@ -1,69 +1,26 @@
 <?php
 
-
 namespace App\Core\Di;
 
-use App\Core\Exeptions\NotFoundException;
-use Psr\Container\ContainerInterface;
-
-class Container implements ContainerInterface
+class Container
 {
-    protected array $definitions = [];
-    protected array $instances = [];
-    protected array $configs = [];
+    protected $services = [];
 
-    public function get($id)
+    public function set($name, $service)
     {
-        if (!$this->has($id)) {
-            throw new NotFoundException("Service not found: " . $id);
+        $this->services[$name] = $service;
+    }
+
+    public function get($name)
+    {
+        if (!isset($this->services[$name])) {
+            throw new \Exception("Service {$name} not found");
         }
-
-        if (!isset($this->instances[$id])) {
-            $this->instances[$id] = $this->createService($id);
+        // Если это замыкание, вызываем его, чтобы получить экземпляр сервиса
+        if (is_callable($this->services[$name])) {
+            return $this->services[$name]($this);
         }
-
-        return $this->instances[$id];
-    }
-
-    public function has($id): bool
-    {
-        return isset($this->definitions[$id]);
-    }
-
-    public function bind($id, array $definition)
-    {
-        $this->definitions[$id] = $definition;
-    }
-
-    public function config($key, $value)
-    {
-        $this->configs[$key] = $value;
-    }
-
-    public function getConfig($key)
-    {
-        if (!isset($this->configs[$key])) {
-            throw new NotFoundException("Config not found: " . $key);
-        }
-        return $this->configs[$key];
-    }
-
-    private function createService($id)
-    {
-        $definition = $this->definitions[$id];
-        $arguments = [];
-
-        if (isset($definition['arguments'])) {
-            foreach ($definition['arguments'] as $argument) {
-                if (is_string($argument) && strpos($argument, '@') === 0) {
-                    $arguments[] = $this->get(substr($argument, 1));
-                } else {
-                    $arguments[] = $argument;
-                }
-            }
-        }
-
-        $reflection = new \ReflectionClass($definition['class']);
-        return $reflection->newInstanceArgs($arguments);
+        // Иначе просто возвращаем сервис
+        return $this->services[$name];
     }
 }
