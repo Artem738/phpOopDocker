@@ -13,6 +13,7 @@ use App\SmartCalculator\Interfaces\IResultHandler;
 use App\SmartCalculator\Loggers\FileLogger;
 use App\SmartCalculator\Loggers\NoLogger;
 use App\SmartCalculator\Notifiers\CliINotifier;
+use App\SmartCalculator\Notifiers\TelegramNotifier;
 use App\SmartCalculator\Operations\AddOperation;
 use App\SmartCalculator\Operations\DivideOperation;
 use App\SmartCalculator\Operations\MultiplyOperation;
@@ -24,7 +25,7 @@ class ContainerConfigurator
     public function setLogger($container, string $loggerType = 'no_logger'): void
     {
         $logger = match ($loggerType) {
-            'file' => function () {
+            'file_loger' => function () {
                 return new FileLogger($_ENV['LOG_PATH']);
             },
             'no_logger' => function () {
@@ -36,12 +37,21 @@ class ContainerConfigurator
         $container->bind(ILoggerInterface::class, $logger);
     }
 
-    public function setNotifier($container): void
+    public function setNotifier($container, string $notifierType = 'cli'): void
     {
-        $container->bind(
-            INotifierInterface::class, function () {
-            return new CliINotifier();
-        });
+        $notifier = match ($notifierType) {
+            'cli' => function () {
+                return new CliINotifier();
+            },
+            'telegram' => function () {
+                $telegramToken = $_ENV['TELEGRAM_TOKEN'];
+                $chatId = $_ENV['TELEGRAM_CHAT_ID'];
+                return new TelegramNotifier($telegramToken, $chatId);
+            },
+            default => throw new \InvalidArgumentException("Unknown notifier type: $notifierType"),
+        };
+
+        $container->bind(INotifierInterface::class, $notifier);
     }
 
     public function bindProcessors($container): void
