@@ -2,10 +2,9 @@
 
 namespace App\SmartCalculator\Enums;
 
-enum EInputTypes: string
+enum ENotifiersTypes: string
 {
     const CLI = 'cli';
-    const INTERACTIVE = 'interactive';
-
+    const TELEGRAM = 'interactive';
 
 }

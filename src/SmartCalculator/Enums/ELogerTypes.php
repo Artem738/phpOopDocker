@@ -5,8 +5,8 @@ namespace App\SmartCalculator\Enums;
 
 enum ELogerTypes: string
 {
-    const no = 'no_loger';
-    const file = 'file_logger';
+    const NO = 'no_loger';
+    const FILE = 'file_logger';
 
 
 }

@@ -4,7 +4,10 @@ use App\Core\Di\Container;
 use App\SmartCalculator\ContainerConfigurator;
 use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Enums\EInputTypes;
+use App\SmartCalculator\Enums\ELogerTypes;
+use App\SmartCalculator\Enums\ENotifiersTypes;
 use App\SmartCalculator\Interfaces\InputInterface;
+use App\SmartCalculator\Notifiers\TelegramNotifier;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -16,19 +19,19 @@ $dotenv->load();
 
 echo EGreetings::bigAppName->value;
 
-// Реализация
+// Реалізація
 
 $container = new Container();
 $configurator = new ContainerConfigurator();
 
-$configurator->setLogger($container);
-$configurator->setNotifier($container);
-$configurator->bindProcessors($container);
+$configurator->setLogger($container, ELogerTypes::FILE);
+$configurator->setNotifier($container, ENotifiersTypes::TELEGRAM);
+$configurator->bindBasicCalculatorOperations($container);
 $configurator->bindAdvancedServices($container);
 
-$configurator->setInputHandler($container, EInputTypes::interactive);
+$configurator->setInputHandler($container, EInputTypes::INTERACTIVE);
 
-// Реализация
+
 try {
     $processor = $container->get(InputInterface::class);
     $processor->handle($argv);

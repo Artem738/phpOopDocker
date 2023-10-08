@@ -4,6 +4,8 @@ namespace App\SmartCalculator;
 
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EInputTypes;
+use App\SmartCalculator\Enums\ELogerTypes;
+use App\SmartCalculator\Enums\ENotifiersTypes;
 use App\SmartCalculator\InputHandlers\CliCommandHandler;
 use App\SmartCalculator\InputHandlers\InteractiveCommandHandler;
 use App\SmartCalculator\Interfaces\ILoggerInterface;
@@ -22,39 +24,44 @@ use App\SmartCalculator\ResultHandlers\ResultHandler;
 
 class ContainerConfigurator
 {
-    public function setLogger($container, string $loggerType = 'no_logger'): void
+    public function setLogger($container, string $loggerType = ELogerTypes::NO): void
     {
         $logger = match ($loggerType) {
-            'file_loger' => function () {
+            ELogerTypes::FILE => function () {
                 return new FileLogger($_ENV['LOG_PATH']);
             },
-            'no_logger' => function () {
+            ELogerTypes::NO => function () {
                 return new NoLogger();
             },
-            default => throw new \InvalidArgumentException("Unknown logger type: $loggerType"),
+            default => throw new \InvalidArgumentException("Невідомий тип логеру: $loggerType"),
         };
 
         $container->bind(ILoggerInterface::class, $logger);
     }
 
-    public function setNotifier($container, string $notifierType = 'cli'): void
+    public function setNotifier($container, string $notifierType = ENotifiersTypes::CLI): void
     {
+        if (!isset($_ENV['TELEGRAM_TOKEN'], $_ENV['TELEGRAM_CHAT_ID'])) {
+            throw new \RuntimeException("Помилка, відсутні налаштування телеграму.");
+        }
+
+        $telegramToken = $_ENV['TELEGRAM_TOKEN'];
+        $chatId = $_ENV['TELEGRAM_CHAT_ID'];
         $notifier = match ($notifierType) {
-            'cli' => function () {
+            ENotifiersTypes::CLI => function () {
                 return new CliINotifier();
             },
-            'telegram' => function () {
-                $telegramToken = $_ENV['TELEGRAM_TOKEN'];
-                $chatId = $_ENV['TELEGRAM_CHAT_ID'];
+            ENotifiersTypes::TELEGRAM => function () use ($telegramToken, $chatId) { //$_ENV не працює тут...
+
                 return new TelegramNotifier($telegramToken, $chatId);
             },
-            default => throw new \InvalidArgumentException("Unknown notifier type: $notifierType"),
+            default => throw new \InvalidArgumentException("Невідомий типа нотіфаєру: $notifierType"),
         };
 
         $container->bind(INotifierInterface::class, $notifier);
     }
 
-    public function bindProcessors($container): void
+    public function bindBasicCalculatorOperations($container): void
     {
         $container->bind(
             CalculatorProcessor::class, function () use ($container) {
@@ -93,13 +100,13 @@ class ContainerConfigurator
     public function setInputHandler($container, string $inputHandler): void
     {
         $handler = match ($inputHandler) {
-            EInputTypes::cli => function () use ($container) {
+            EInputTypes::CLI => function () use ($container) {
                 return new CliCommandHandler($container->get(CalculatorProcessor::class));
             },
-            EInputTypes::interactive => function () use ($container) {
+            EInputTypes::INTERACTIVE => function () use ($container) {
                 return new InteractiveCommandHandler($container->get(CalculatorProcessor::class));
             },
-            default => throw new \InvalidArgumentException("Unknown input handler: $inputHandler"),
+            default => throw new \InvalidArgumentException("Невідомий тип вводу: $inputHandler"),
         };
 
         $container->bind(InputInterface::class, $handler);
