@@ -24,12 +24,13 @@ echo EGreetings::bigAppName->value;
 $container = new Container();
 $configurator = new ContainerConfigurator();
 
+$configurator->setInputHandler($container, EInputTypes::CLI);
 $configurator->setLogger($container, ELogerTypes::FILE);
 $configurator->setNotifier($container, ENotifiersTypes::TELEGRAM);
-$configurator->bindBasicCalculatorOperations($container);
-$configurator->bindAdvancedServices($container);
+$configurator->setBasicCalculatorOperations($container);
+$configurator->setResultHandler($container);
 
-$configurator->setInputHandler($container, EInputTypes::INTERACTIVE);
+
 
 
 try {
@@ -42,6 +43,37 @@ try {
 
 exit();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//// Без контейнеру
+///
 //$logger = new FileLogger($_ENV['LOG_PATH']);
 //$notifier = new CliINotifier();
 //

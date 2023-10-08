@@ -28,7 +28,7 @@ class ContainerConfigurator
     {
         $logger = match ($loggerType) {
             ELogerTypes::FILE => function () {
-                return new FileLogger($_ENV['LOG_PATH']);
+                return new FileLogger($_ENV['WORKDIR'].'/'.$_ENV['LOG_PATH']);
             },
             ELogerTypes::NO => function () {
                 return new NoLogger();
@@ -61,7 +61,7 @@ class ContainerConfigurator
         $container->bind(INotifierInterface::class, $notifier);
     }
 
-    public function bindBasicCalculatorOperations($container): void
+    public function setBasicCalculatorOperations($container): void
     {
         $container->bind(
             CalculatorProcessor::class, function () use ($container) {
@@ -78,14 +78,9 @@ class ContainerConfigurator
         }
         );
 
-        $container->bind(
-            InputInterface::class, function () use ($container) {
-            return new CliCommandHandler($container->get(CalculatorProcessor::class));
-        }
-        );
     }
 
-    public function bindAdvancedServices($container): void
+    public function setResultHandler($container): void
     {
         $container->bind(
             IResultHandler::class, function () use ($container) {

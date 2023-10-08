@@ -8,18 +8,15 @@ use App\SmartCalculator\Interfaces\IResultHandler;
 
 class CalculatorProcessor implements ICalculatorProcessor
 {
-    protected array $operations = [];
-    protected IResultHandler $resultHandler;
 
     public function __construct(
-        IResultHandler $resultHandler,
-        array $operations
+        protected IResultHandler $resultHandler,
+        protected array          $operations = []
     ) {
-        $this->resultHandler = $resultHandler;
-        $this->operations = $operations;
     }
 
-    public function calculate(string $operation, $number1, $number2): int|float {
+    public function calculate(string $operation, $number1, $number2): int|float
+    {
         if (!isset($this->operations[$operation])) {
             throw new \InvalidArgumentException(
                 PHP_EOL . "Unknown operation: $operation. 
