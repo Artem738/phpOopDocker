@@ -59,7 +59,8 @@ INSERT INTO city_names (name_uk, name_ru, slug)
 SELECT DISTINCT name_uk, name_ru, slug
 FROM catalog_city;
 
--- Створюємо таблицю для міст
+-- Створюємо таблицю для міст,
+-- Нова пошта має стрінгове, інші інтове... Робимо як бачимо. YAGNI
 CREATE TABLE catalog_new
 (
     id                  INT NOT NULL PRIMARY KEY,
