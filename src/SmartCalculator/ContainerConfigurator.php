@@ -8,14 +8,16 @@ use App\SmartCalculator\Enums\ELogerTypes;
 use App\SmartCalculator\Enums\ENotifiersTypes;
 use App\SmartCalculator\InputHandlers\CliCommandHandler;
 use App\SmartCalculator\InputHandlers\InteractiveCommandHandler;
+use App\SmartCalculator\InputHandlers\WebCommandHandler;
 use App\SmartCalculator\Interfaces\ILoggerInterface;
 use App\SmartCalculator\Interfaces\INotifierInterface;
 use App\SmartCalculator\Interfaces\InputInterface;
 use App\SmartCalculator\Interfaces\IResultHandler;
 use App\SmartCalculator\Loggers\FileLogger;
 use App\SmartCalculator\Loggers\NoLogger;
-use App\SmartCalculator\Notifiers\CliINotifier;
+use App\SmartCalculator\Notifiers\CliNotifier;
 use App\SmartCalculator\Notifiers\TelegramNotifier;
+use App\SmartCalculator\Notifiers\WebNotifier;
 use App\SmartCalculator\Operations\AddOperation;
 use App\SmartCalculator\Operations\DivideOperation;
 use App\SmartCalculator\Operations\MultiplyOperation;
@@ -49,11 +51,13 @@ class ContainerConfigurator
         $chatId = $_ENV['TELEGRAM_CHAT_ID'];
         $notifier = match ($notifierType) {
             ENotifiersTypes::CLI => function () {
-                return new CliINotifier();
+                return new CliNotifier();
             },
             ENotifiersTypes::TELEGRAM => function () use ($telegramToken, $chatId) { //$_ENV не працює тут...
-
                 return new TelegramNotifier($telegramToken, $chatId);
+            },
+            ENotifiersTypes::WEB => function () {
+                return new WebNotifier();
             },
             default => throw new \InvalidArgumentException("Невідомий типа нотіфаєру: $notifierType"),
         };
@@ -77,7 +81,6 @@ class ContainerConfigurator
             );
         }
         );
-
     }
 
     public function setResultHandler($container): void
@@ -100,6 +103,9 @@ class ContainerConfigurator
             },
             EInputTypes::INTERACTIVE => function () use ($container) {
                 return new InteractiveCommandHandler($container->get(CalculatorProcessor::class));
+            },
+            EInputTypes::WEB => function () use ($container) {
+                return new WebCommandHandler($container->get(CalculatorProcessor::class));
             },
             default => throw new \InvalidArgumentException("Невідомий тип вводу: $inputHandler"),
         };
