@@ -1,6 +1,6 @@
 <?php
 
-// WEB
+// WEB ROUTES
 return [
     'calc' => 'CalculatorController',
     'short-url' => 'ShortUrlController',
