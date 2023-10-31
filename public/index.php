@@ -27,6 +27,31 @@ try {
     echo "Помилка: " . $e->getMessage() . PHP_EOL;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //// Реалізація
 //
 //$container = new Container();
