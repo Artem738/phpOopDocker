@@ -18,7 +18,7 @@ class RoutesController
         if (isset($this->routes[$route])) {
             $controllerName = 'App\\HTTP\\Controllers\\' . $this->routes[$route];
             $controller = new $controllerName();
-            //array_shift($uriParts);
+            //array_shift($uriParts); // todo or yagni...
             $controller->handle($uriParts);
         } else {
 
