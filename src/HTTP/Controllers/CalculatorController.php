@@ -32,6 +32,5 @@ class CalculatorController
             echo "Помилка: " . $e->getMessage() . PHP_EOL;
         }
 
-        exit();
     }
 }

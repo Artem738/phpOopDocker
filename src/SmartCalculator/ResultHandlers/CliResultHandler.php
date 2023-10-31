@@ -8,15 +8,10 @@ use App\SmartCalculator\Interfaces\IResultHandler;
 
 class CliResultHandler implements IResultHandler
 {
-    protected INotifierInterface $notifier;
-    protected ILoggerInterface $logger;
-
     public function __construct(
-        INotifierInterface $notifier,
-        ILoggerInterface $logger
+        protected INotifierInterface $notifier,
+        protected ILoggerInterface $logger
     ) {
-        $this->notifier = $notifier;
-        $this->logger = $logger;
     }
 
     public function handle(string $operation, $result): void {

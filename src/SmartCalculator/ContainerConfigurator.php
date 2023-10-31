@@ -85,18 +85,6 @@ class ContainerConfigurator
         );
     }
 
-//    public function setResultViewHandler($container): void
-//    {
-//        $container->bind(
-//            IResultHandler::class, function () use ($container) {
-//            return new CliResultHandler(
-//                $container->get(INotifierInterface::class),
-//                $container->get(ILoggerInterface::class)
-//            );
-//        }
-//        );
-//    }
-
     public function setResultViewHandler($container, string $resultViewType): void
     {
         $handler = match ($resultViewType) {
@@ -136,9 +124,5 @@ class ContainerConfigurator
         $container->bind(InputInterface::class, $handler);
     }
 
-//    public function createInputHandler($container): InputInterface
-//    {
-//        return $container->get(InputInterface::class);
-//    }
 
 }

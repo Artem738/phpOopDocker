@@ -14,11 +14,10 @@ class WebCommandHandler implements InputInterface
     ) {
     }
 
-
     public function handle(array $args)
     {
         echo EGreetings::bigAppNameWeb->value; //H1
-        // test on "calc"
+        // test on "calc" // old
         if ($args[0] !== 'calc') {
             echo "Помилка реалізації: Невідомий URL";
             die();
@@ -36,7 +35,7 @@ class WebCommandHandler implements InputInterface
         $number1 = $args[1];
         $number2 = $args[2];
 
-        // Проверка на лишние числа
+        // Зайві числа
         if (count($args) > 3) {
             echo "Увага: виявлено зайве число. Воно буде проігноровано.<br>";
         }

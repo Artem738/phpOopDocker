@@ -6,11 +6,9 @@ use App\Core\Di\Container;
 
 class RoutesController
 {
-    protected $routes;
-
-    public function __construct(array $routes)
-    {
-        $this->routes = $routes;
+    public function __construct(
+        protected array $routes,
+    ) {
     }
 
     public function dispatch(array $uriParts)
