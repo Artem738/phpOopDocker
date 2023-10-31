@@ -6,6 +6,7 @@ use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EInputTypes;
 use App\SmartCalculator\Enums\ELogerTypes;
 use App\SmartCalculator\Enums\ENotifiersTypes;
+use App\SmartCalculator\Enums\EResultViewTypes;
 use App\SmartCalculator\InputHandlers\CliCommandHandler;
 use App\SmartCalculator\InputHandlers\InteractiveCommandHandler;
 use App\SmartCalculator\InputHandlers\WebCommandHandler;
@@ -22,7 +23,8 @@ use App\SmartCalculator\Operations\AddOperation;
 use App\SmartCalculator\Operations\DivideOperation;
 use App\SmartCalculator\Operations\MultiplyOperation;
 use App\SmartCalculator\Operations\SubtractOperation;
-use App\SmartCalculator\ResultHandlers\ResultHandler;
+use App\SmartCalculator\ResultHandlers\CliResultHandler;
+use App\SmartCalculator\ResultHandlers\WebResultHandler;
 
 class ContainerConfigurator
 {
@@ -30,7 +32,7 @@ class ContainerConfigurator
     {
         $logger = match ($loggerType) {
             ELogerTypes::FILE => function () {
-                return new FileLogger($_ENV['WORKDIR'].'/'.$_ENV['LOG_PATH']);
+                return new FileLogger($_ENV['WORKDIR'] . '/' . $_ENV['LOG_PATH']);
             },
             ELogerTypes::NO => function () {
                 return new NoLogger();
@@ -83,16 +85,37 @@ class ContainerConfigurator
         );
     }
 
-    public function setResultHandler($container): void
+//    public function setResultViewHandler($container): void
+//    {
+//        $container->bind(
+//            IResultHandler::class, function () use ($container) {
+//            return new CliResultHandler(
+//                $container->get(INotifierInterface::class),
+//                $container->get(ILoggerInterface::class)
+//            );
+//        }
+//        );
+//    }
+
+    public function setResultViewHandler($container, string $resultViewType): void
     {
-        $container->bind(
-            IResultHandler::class, function () use ($container) {
-            return new ResultHandler(
-                $container->get(INotifierInterface::class),
-                $container->get(ILoggerInterface::class)
-            );
-        }
-        );
+        $handler = match ($resultViewType) {
+            EResultViewTypes::CLI => function () use ($container) {
+                return new CliResultHandler(
+                    $container->get(INotifierInterface::class),
+                    $container->get(ILoggerInterface::class)
+                );
+            },
+            EResultViewTypes::WEB => function () use ($container) {
+                return new WebResultHandler(
+                    $container->get(INotifierInterface::class),
+                    $container->get(ILoggerInterface::class)
+                );
+            },
+            default => throw new \InvalidArgumentException("Невідомий тип виводу результату: $resultViewType"),
+        };
+
+        $container->bind(IResultHandler::class, $handler);
     }
 
     public function setInputHandler($container, string $inputHandler): void

@@ -6,6 +6,7 @@ use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Enums\EInputTypes;
 use App\SmartCalculator\Enums\ELogerTypes;
 use App\SmartCalculator\Enums\ENotifiersTypes;
+use App\SmartCalculator\Enums\EResultViewTypes;
 use App\SmartCalculator\Interfaces\InputInterface;
 use App\SmartCalculator\Notifiers\TelegramNotifier;
 use Psr\Container\ContainerExceptionInterface;
@@ -28,7 +29,7 @@ $configurator->setInputHandler($container, EInputTypes::CLI);
 $configurator->setLogger($container, ELogerTypes::FILE);
 $configurator->setNotifier($container, ENotifiersTypes::TELEGRAM);
 $configurator->setBasicCalculatorOperations($container);
-$configurator->setResultHandler($container);
+$configurator->setResultViewHandler($container, EResultViewTypes::WEB);
 
 
 
