@@ -14,7 +14,7 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class CalculatorController
 {
-    public function handle(array $uriParts)
+    public function handle(array $uriParts): void
     {
         $container = new Container();
         $configurator = new ContainerConfigurator();
