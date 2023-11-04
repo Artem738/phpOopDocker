@@ -2,30 +2,42 @@
 
 namespace App\Core\Router;
 
+class RouteResult
+{
+    public function __construct(
+        public string $uri,
+        public array $uriParts,
+        public array $queryParams
+    ) {
+    }
+}
+
 class WebUrlRouter
 {
     public function __construct(
-        protected WebRouterValidator $validator,
+        protected WebRouterValidator $validator
     ) {
     }
 
     public function route()
     {
         $uri = $_SERVER['REQUEST_URI'];
+        $queryParams = [];
 
+        // Проверяем наличие строки запроса
         if (false !== $pos = strpos($uri, '?')) {
+            $queryString = substr($uri, $pos + 1);
+            parse_str($queryString, $queryParams);
+            $queryParams = $this->validator->validateQueryString($queryParams);
             $uri = substr($uri, 0, $pos);
         }
 
+
         $uriParts = explode('/', trim($uri, '/'));
-        $uriParts = $this->validator->validateUrlArray($uriParts);
+        if (!empty($uriParts)) {
+            $uriParts = $this->validator->validateUrlPath($uriParts);
+        }
 
-        $queryParams = !empty($_GET) ? $this->validator->validateUrlArray($_GET) : [];
-
-        return [
-            'uriParts' => $uriParts,
-            'queryParams' => $queryParams
-        ];
+        return new RouteResult($uri, $uriParts, $queryParams);
     }
-
 }

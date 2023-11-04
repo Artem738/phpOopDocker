@@ -12,6 +12,7 @@ class FileLogger implements ILoggerInterface
     ) {
     }
 
+
     public function log(string $message): void
     {
         if (false === file_put_contents($this->filePath, $message . PHP_EOL, FILE_APPEND)) {
