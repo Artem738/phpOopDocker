@@ -9,20 +9,21 @@ use Psr\Container\NotFoundExceptionInterface;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');  //Доробити...
 $dotenv->load();
-//Доробити.
+
 
 $webRouter = new WebUrlRouter(new WebRouterValidator());
 
 $routes = require_once __DIR__ . '/../routes/web.php';  //  routes
 
-$controllerDispatcher = new RoutesController($routes);
+$controller = new RoutesController($routes);
 
 try {
-    $routeData = $webRouter->route();
 
-    $controllerDispatcher->dispatch($routeData);
+    $routeData = $webRouter->route();
+    $controller->dispatch($routeData);
+
 } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
     echo "Помилка: " . $e->getMessage() . PHP_EOL;
 }

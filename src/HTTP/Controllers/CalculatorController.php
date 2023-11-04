@@ -36,10 +36,11 @@ class CalculatorController
         $resultHandler = new WebResultHandler($notifier, $logger);
 
         $operations = [
-            ECalcOperations::ADD->value => new AddOperation(),
-            ECalcOperations::SUBTRACT->value => new SubtractOperation(),
-            ECalcOperations::MULTIPLY->value => new MultiplyOperation(),
-            ECalcOperations::DIVIDE->value => new DivideOperation(),
+            ECalcOperations::ADD->value =>       new AddOperation(),
+            ECalcOperations::SUBTRACT->value =>  new SubtractOperation(),
+            ECalcOperations::MULTIPLY->value =>  new MultiplyOperation(),
+            ECalcOperations::MULTI->value =>     new MultiplyOperation(),
+            ECalcOperations::DIVIDE->value =>    new DivideOperation(),
         ];
 
         $calculatorProcessor = new CalculatorProcessor($resultHandler, $operations);

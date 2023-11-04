@@ -15,5 +15,9 @@ enum ECalcOperations: string
     {
         return implode(', ', array_column(self::cases(), 'value'));
     }
+    public static function allToStringVertBar(): string
+    {
+        return implode('|', array_column(self::cases(), 'value'));
+    }
 }
 
