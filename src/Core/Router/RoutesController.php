@@ -11,7 +11,7 @@ class RoutesController
     ) {
     }
 
-    public function dispatch(RouteResult $routeResult)
+    public function dispatch(RouteResultDTO $routeResult)
     {
         $route = $routeResult->uriParts[0] ?? null;
 

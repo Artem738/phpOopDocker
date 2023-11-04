@@ -2,15 +2,7 @@
 
 namespace App\Core\Router;
 
-class RouteResult
-{
-    public function __construct(
-        public string $uri,
-        public array $uriParts,
-        public array $queryParams
-    ) {
-    }
-}
+
 
 class WebUrlRouter
 {
@@ -38,6 +30,6 @@ class WebUrlRouter
             $uriParts = $this->validator->validateUrlPath($uriParts);
         }
 
-        return new RouteResult($uri, $uriParts, $queryParams);
+        return new RouteResultDTO($uri, $uriParts, $queryParams);
     }
 }

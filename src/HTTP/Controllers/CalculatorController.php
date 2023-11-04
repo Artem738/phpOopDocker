@@ -3,7 +3,7 @@
 namespace App\HTTP\Controllers;
 
 use App\Core\Di\Container;
-use App\Core\Router\RouteResult;
+use App\Core\Router\RouteResultDTO;
 use App\SmartCalculator\CalculatorProcessor;
 use App\SmartCalculator\ContainerConfigurator;
 use App\SmartCalculator\Enums\ECalcOperations;
@@ -25,7 +25,7 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class CalculatorController
 {
-    public function handle(RouteResult $routeResult): void
+    public function handle(RouteResultDTO $routeResult): void
     {
 
         // Без контейнеру

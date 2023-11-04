@@ -2,11 +2,11 @@
 
 namespace App\HTTP\Controllers;
 
-use App\Core\Router\RouteResult;
+use App\Core\Router\RouteResultDTO;
 
 class ShortUrlController
 {
-    public function handle(RouteResult $routeResult)
+    public function handle(RouteResultDTO $routeResult)
     {
 
         echo("ShortUrl under construction");
