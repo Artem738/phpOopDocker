@@ -28,9 +28,6 @@ class ParsController
             echo(htmlspecialchars($item) . '<br>');
         }
 
-//        echo $stringBody;
-
-
         /// http://localhost/pars?url=https%3A%2F%2Fwww.espressoenglish.net%2Fthe-100-most-common-words-in-english%2F&left=%3Cli+%3E&right=%3C%2Fli+%3E
 
     }
