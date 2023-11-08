@@ -1,14 +1,24 @@
 <?php
 
 use App\Core\Di\Container;
+use App\SmartCalculator\CalculatorProcessor;
 use App\SmartCalculator\ContainerConfigurator;
+use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Enums\EInputTypes;
 use App\SmartCalculator\Enums\ELogerTypes;
 use App\SmartCalculator\Enums\ENotifiersTypes;
 use App\SmartCalculator\Enums\EResultViewTypes;
+use App\SmartCalculator\InputHandlers\CliCommandHandler;
 use App\SmartCalculator\Interfaces\InputInterface;
+use App\SmartCalculator\Loggers\FileLogger;
+use App\SmartCalculator\Notifiers\CliNotifier;
 use App\SmartCalculator\Notifiers\TelegramNotifier;
+use App\SmartCalculator\Operations\AddOperation;
+use App\SmartCalculator\Operations\DivideOperation;
+use App\SmartCalculator\Operations\MultiplyOperation;
+use App\SmartCalculator\Operations\SubtractOperation;
+use App\SmartCalculator\ResultHandlers\CliResultHandler;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -22,25 +32,22 @@ echo EGreetings::bigAppNameCli->value;
 
 // Реалізація
 
-$container = new Container();
-$configurator = new ContainerConfigurator();
+$logger = new FileLogger($_ENV['WORKDIR'].$_ENV['WEB_LOG_PATH']);
+$notifier = new CliNotifier();
 
-$configurator->setInputHandler($container, EInputTypes::CLI);
-$configurator->setLogger($container, ELogerTypes::FILE);
-$configurator->setNotifier($container, ENotifiersTypes::TELEGRAM);
-$configurator->setBasicCalculatorOperations($container);
-$configurator->setResultViewHandler($container, EResultViewTypes::WEB);
+$resultHandler = new CliResultHandler($notifier, $logger);
 
+$operations = [
+    ECalcOperations::ADD->value => new AddOperation(),
+    ECalcOperations::SUBTRACT->value => new SubtractOperation(),
+    ECalcOperations::MULTIPLY->value => new MultiplyOperation(),
+    ECalcOperations::DIVIDE->value => new DivideOperation(),
+];
 
+$calculatorProcessor = new CalculatorProcessor($resultHandler, $operations);
 
-
-try {
-    $processor = $container->get(InputInterface::class);
-    $processor->handle($argv);
-} catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
-    echo "Error: " . $e->getMessage() . PHP_EOL;
-}
-
+$commandHandler = new CliCommandHandler($calculatorProcessor);
+$commandHandler->handle($argv);
 
 exit();
 
@@ -73,24 +80,27 @@ exit();
 
 
 
-//// Без контейнеру
-///
-//$logger = new FileLogger($_ENV['LOG_PATH']);
-//$notifier = new CliINotifier();
+
+
+
+
+//$container = new Container();
+//$configurator = new ContainerConfigurator();
 //
-//$resultHandler = new ResultHandler($notifier, $logger);
+//$configurator->setInputHandler($container, EInputTypes::CLI);
+//$configurator->setLogger($container, ELogerTypes::FILE);
+//$configurator->setNotifier($container, ENotifiersTypes::TELEGRAM);
+//$configurator->setBasicCalculatorOperations($container);
+//$configurator->setResultViewHandler($container, EResultViewTypes::WEB);
 //
-//$operations = [
-//    ECalcOperations::ADD->value => new AddOperation(),
-//    ECalcOperations::SUBTRACT->value => new SubtractOperation(),
-//    ECalcOperations::MULTIPLY->value => new MultiplyOperation(),
-//    ECalcOperations::DIVIDE->value => new DivideOperation(),
-//];
 //
-//$calculatorProcessor = new CalculatorProcessor($resultHandler, $operations);
 //
-//$commandHandler = new CliCommandHandler($calculatorProcessor);
-//$commandHandler->handle($argv);
 //
-//exit();
+//try {
+//    $processor = $container->get(InputInterface::class);
+//    $processor->handle($argv);
+//} catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
+//    echo "Error: " . $e->getMessage() . PHP_EOL;
+//}
+
 

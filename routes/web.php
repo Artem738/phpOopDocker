@@ -2,6 +2,7 @@
 
 use App\HTTP\Controllers\AdminController;
 use App\HTTP\Controllers\CalculatorController;
+use App\HTTP\Controllers\ParsController;
 use App\HTTP\Controllers\ShortUrlController;
 use App\SmartCalculator\Enums\ECalcOperations;
 
@@ -12,4 +13,5 @@ return [
     '/^short-url\/([a-zA-Z0-9]+)$/' => ShortUrlController::class,
 
     '/^\/admin$/' => AdminController::class,
+    '/^\/pars$/' => ParsController::class,
 ];
