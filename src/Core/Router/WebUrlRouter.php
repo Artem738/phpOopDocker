@@ -16,7 +16,6 @@ class WebUrlRouter
         $uri = $_SERVER['REQUEST_URI'];
         $queryParams = [];
 
-        // Проверяем наличие строки запроса
         if (false !== $pos = strpos($uri, '?')) {
             $queryString = substr($uri, $pos + 1);
             parse_str($queryString, $queryParams);
