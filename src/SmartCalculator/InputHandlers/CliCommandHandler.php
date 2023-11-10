@@ -4,13 +4,13 @@ namespace App\SmartCalculator\InputHandlers;
 
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Interfaces\ICalculatorProcessor;
-use App\SmartCalculator\Interfaces\IInputInterface;
+use App\SmartCalculator\Interfaces\ICommandInputInterface;
 
 
 
 
 
-class CliCommandHandler implements IInputInterface
+class CliCommandHandler implements ICommandInputInterface
 {
     public function __construct(
         protected ICalculatorProcessor  $processor,

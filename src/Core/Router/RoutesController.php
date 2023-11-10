@@ -2,14 +2,14 @@
 
 namespace App\Core\Router;
 
-use App\SmartCalculator\Interfaces\IInputInterface;
+use App\SmartCalculator\Interfaces\ICommandInputInterface;
 
 class RoutesController
 {
 
     public function __construct(
         protected array           $routes,
-        protected IInputInterface $commandHandler
+        protected ICommandInputInterface $commandHandler
     ) {
     }
 

@@ -10,7 +10,7 @@ use App\SmartCalculator\Enums\ELogerTypes;
 use App\SmartCalculator\Enums\ENotifiersTypes;
 use App\SmartCalculator\Enums\EResultViewTypes;
 use App\SmartCalculator\InputHandlers\CliCommandHandler;
-use App\SmartCalculator\Interfaces\IInputInterface;
+use App\SmartCalculator\Interfaces\ICommandInputInterface;
 use App\SmartCalculator\Loggers\FileLogger;
 use App\SmartCalculator\Notifiers\CliNotifier;
 use App\SmartCalculator\Notifiers\TelegramNotifier;

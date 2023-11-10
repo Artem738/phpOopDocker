@@ -3,13 +3,13 @@
 namespace App\HTTP\Controllers;
 
 use App\Core\Router\RouteResultDTO;
-use App\SmartCalculator\Interfaces\IInputInterface;
+use App\SmartCalculator\Interfaces\ICommandInputInterface;
 
 class CalculatorController
 {
 
     public function __construct(
-        protected IInputInterface $commandHandler,
+        protected ICommandInputInterface $commandHandler,
     ) {
     }
 

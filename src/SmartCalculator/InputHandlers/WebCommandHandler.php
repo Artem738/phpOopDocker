@@ -5,9 +5,9 @@ namespace App\SmartCalculator\InputHandlers;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Interfaces\ICalculatorProcessor;
-use App\SmartCalculator\Interfaces\IInputInterface;
+use App\SmartCalculator\Interfaces\ICommandInputInterface;
 
-class WebCommandHandler implements IInputInterface
+class WebCommandHandler implements ICommandInputInterface
 {
     public function __construct(
         protected ICalculatorProcessor $processor,
