@@ -1,7 +1,7 @@
 <?php
 
 namespace App\SmartCalculator\Interfaces;
-interface InputInterface
+interface IInputInterface
 {
     public function handle(array $args);
 }

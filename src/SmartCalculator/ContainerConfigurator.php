@@ -12,7 +12,7 @@ use App\SmartCalculator\InputHandlers\InteractiveCommandHandler;
 use App\SmartCalculator\InputHandlers\WebCommandHandler;
 use App\SmartCalculator\Interfaces\ILoggerInterface;
 use App\SmartCalculator\Interfaces\INotifierInterface;
-use App\SmartCalculator\Interfaces\InputInterface;
+use App\SmartCalculator\Interfaces\IInputInterface;
 use App\SmartCalculator\Interfaces\IResultHandler;
 use App\SmartCalculator\Loggers\FileLogger;
 use App\SmartCalculator\Loggers\NoLogger;
@@ -121,7 +121,7 @@ class ContainerConfigurator
             default => throw new \InvalidArgumentException("Невідомий тип вводу: $inputHandler"),
         };
 
-        $container->bind(InputInterface::class, $handler);
+        $container->bind(IInputInterface::class, $handler);
     }
 
 

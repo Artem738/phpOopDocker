@@ -2,15 +2,15 @@
 
 namespace App\Core\Router;
 
-use App\Core\Di\Container;
+use App\SmartCalculator\Interfaces\IInputInterface;
 
 class RoutesController
 {
-    protected array $routes;
 
-    public function __construct(array $routes)
-    {
-        $this->routes = $routes;
+    public function __construct(
+        protected array           $routes,
+        protected IInputInterface $commandHandler
+    ) {
     }
 
     public function dispatch(RouteResultDTO $routeResult)
@@ -18,11 +18,8 @@ class RoutesController
         $uri = $routeResult->uri;
 
         foreach ($this->routes as $pattern => $controllerName) {
-            //echo ($pattern .' - '. $uri. '<br>');
             if (preg_match($pattern, $uri)) {
-
-                $controller = new $controllerName();
-                $controller->handle($routeResult);
+                $this->commandHandler->handle($routeResult->uriParts);
                 return;
             }
         }
@@ -30,4 +27,3 @@ class RoutesController
         echo "404: Не може існувати";
     }
 }
-
