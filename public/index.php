@@ -33,7 +33,6 @@ $operations = [
 $resultHandler = new WebResultHandler(new WebNotifier(), new FileLogger($_ENV['WORKDIR'].$_ENV['WEB_LOG_PATH']));
 $commandHandler = new WebCommandHandler(new CalculatorProcessor($resultHandler, $operations));
 
-//WebCommandHandler має вийти
 
 $routes = require_once __DIR__ . '/../routes/web.php';
 $controller = new RoutesController($routes, $commandHandler);
