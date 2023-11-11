@@ -1,26 +1,16 @@
 <?php
 
-use App\Core\Di\Container;
 use App\SmartCalculator\CalculatorProcessor;
-use App\SmartCalculator\ContainerConfigurator;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EGreetings;
-use App\SmartCalculator\Enums\EInputTypes;
-use App\SmartCalculator\Enums\ELogerTypes;
-use App\SmartCalculator\Enums\ENotifiersTypes;
-use App\SmartCalculator\Enums\EResultViewTypes;
 use App\SmartCalculator\InputHandlers\CliCommandHandler;
-use App\SmartCalculator\Interfaces\ICommandInputInterface;
 use App\SmartCalculator\Loggers\FileLogger;
 use App\SmartCalculator\Notifiers\CliNotifier;
-use App\SmartCalculator\Notifiers\TelegramNotifier;
 use App\SmartCalculator\Operations\AddOperation;
 use App\SmartCalculator\Operations\DivideOperation;
 use App\SmartCalculator\Operations\MultiplyOperation;
 use App\SmartCalculator\Operations\SubtractOperation;
 use App\SmartCalculator\ResultHandlers\CliResultHandler;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 
 require_once __DIR__ . '/../vendor/autoload.php';

@@ -8,12 +8,14 @@ use App\SmartCalculator\Interfaces\IResultHandler;
 
 class CalculatorProcessor implements ICalculatorProcessor
 {
-
     public function __construct(
-        protected IResultHandler $resultHandler,
-        protected array          $operations = []
+        protected array                  $operations,
+        protected IResultHandler         $resultHandler,
+
     ) {
     }
+
+
 
     public function calculate(string $operation, $number1, $number2): int|float
     {
@@ -30,4 +32,7 @@ class CalculatorProcessor implements ICalculatorProcessor
 
         return $result;
     }
+
 }
+
+
