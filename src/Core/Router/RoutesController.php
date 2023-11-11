@@ -2,14 +2,14 @@
 
 namespace App\Core\Router;
 
-use App\HTTP\IWebControllerInterface;
+use App\HTTP\IControllerInterface;
 
 class RoutesController
 {
 
     public function __construct(
         protected array           $routes,
-        protected IWebControllerInterface $commandHandler
+        protected IControllerInterface $commandHandler
     ) {
     }
 

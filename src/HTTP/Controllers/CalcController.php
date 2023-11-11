@@ -2,13 +2,13 @@
 
 namespace App\HTTP\Controllers;
 
-use App\HTTP\IWebControllerInterface;
+use App\HTTP\IControllerInterface;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Interfaces\ICalculatorProcessor;
 use App\SmartCalculator\Interfaces\IResultHandler;
 
-class CalcWebController implements IWebControllerInterface
+class CalcController implements IControllerInterface
 {
     public function __construct(
         protected ICalculatorProcessor $controller,
