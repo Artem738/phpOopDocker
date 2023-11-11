@@ -2,19 +2,21 @@
 
 namespace App\HTTP\Controllers;
 
+use App\HTTP\IWebControllerInterface;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Interfaces\ICalculatorProcessor;
-use App\SmartCalculator\Interfaces\ICommandInputInterface;
+use App\SmartCalculator\Interfaces\IResultHandler;
 
-class CalcWebController implements ICommandInputInterface
+class CalcWebController implements IWebControllerInterface
 {
     public function __construct(
         protected ICalculatorProcessor $controller,
+        protected IResultHandler         $resultHandler,
     ) {
     }
 
-    public function handle(array $args)
+    public function handle(array $args): void
     {
         echo EGreetings::bigAppNameWeb->value; //H1
         // test on "calc" // old
@@ -41,7 +43,9 @@ class CalcWebController implements ICommandInputInterface
         }
 
         try {
-            return $this->controller->calculate($operation, $number1, $number2);
+            $result = $this->controller->calculate($operation, $number1, $number2);
+            $this->resultHandler->handle($operation, $result); // Обработка результату
+            echo "Результат операції: " . $result;
         } catch (\Exception $e) {
             echo "Помилка калькулятора: " . $e->getMessage() . "<br>";
             die();

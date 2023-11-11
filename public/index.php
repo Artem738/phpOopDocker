@@ -32,13 +32,11 @@ $operations = [
 ];
 $resultHandler = new WebResultHandler(new WebNotifier(), new FileLogger($_ENV['WORKDIR'].$_ENV['WEB_LOG_PATH']));
 
-
-$calculatorProcessor = new CalculatorProcessor($operations, $resultHandler);
-$commandHandler = new CalcWebController($calculatorProcessor);
+$webController = new CalcWebController(new CalculatorProcessor($operations), $resultHandler);
 
 
 $routes = require_once __DIR__ . '/../routes/web.php';
-$controller = new RoutesController($routes, $commandHandler);
+$controller = new RoutesController($routes, $webController);
 
 $webRouter = new WebUrlRouter(new WebRouterValidator());
 

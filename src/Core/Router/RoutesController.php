@@ -2,14 +2,14 @@
 
 namespace App\Core\Router;
 
-use App\SmartCalculator\Interfaces\ICommandInputInterface;
+use App\HTTP\IWebControllerInterface;
 
 class RoutesController
 {
 
     public function __construct(
         protected array           $routes,
-        protected ICommandInputInterface $commandHandler
+        protected IWebControllerInterface $commandHandler
     ) {
     }
 
@@ -19,6 +19,7 @@ class RoutesController
 
         foreach ($this->routes as $pattern => $controllerName) {
             if (preg_match($pattern, $uri)) {
+
                 $this->commandHandler->handle($routeResult->uriParts);
                 return;
             }
