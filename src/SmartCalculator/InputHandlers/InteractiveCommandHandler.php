@@ -2,11 +2,11 @@
 
 namespace App\SmartCalculator\InputHandlers;
 
+use App\Core\IAllControllersInterface;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Interfaces\ICalculatorProcessor;
-use App\SmartCalculator\Interfaces\ICommandInputInterface;
 
-class InteractiveCommandHandler implements ICommandInputInterface
+class InteractiveCommandHandler // implements IAllControllersInterface
 {
     public function __construct(
         protected ICalculatorProcessor $processor,

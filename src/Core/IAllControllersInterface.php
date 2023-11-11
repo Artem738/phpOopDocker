@@ -1,7 +1,7 @@
 <?php
 
-namespace App\HTTP;
-interface IControllerInterface
+namespace App\Core;
+interface IAllControllersInterface
 {
     public function handle(array $args): void;
 }

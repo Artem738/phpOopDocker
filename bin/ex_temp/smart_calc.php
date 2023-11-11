@@ -15,7 +15,7 @@ use App\SmartCalculator\ResultHandlers\CliResultHandler;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/phpOopDocker');
 $dotenv->load();
 
 echo EGreetings::bigAppNameCli->value;
@@ -40,8 +40,6 @@ $commandHandler = new CliCommandHandler($calculatorProcessor);
 $commandHandler->handle($argv);
 
 exit();
-
-
 
 
 
