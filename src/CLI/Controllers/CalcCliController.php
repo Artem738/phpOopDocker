@@ -3,16 +3,16 @@
 namespace App\CLI\Controllers;
 
 use App\Core\IAllControllersInterface;
+use App\Core\IResultHandlerInterface;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Interfaces\ICalculatorProcessor;
-use App\SmartCalculator\Interfaces\IResultHandler;
 
 class CalcCliController implements IAllControllersInterface
 {
     public function __construct(
         protected ICalculatorProcessor $calculatorProcessor,
-        protected IResultHandler $resultHandler
+        protected IResultHandlerInterface $resultHandler
     ) {
     }
 
@@ -21,8 +21,8 @@ class CalcCliController implements IAllControllersInterface
         echo EGreetings::bigAppNameCli->value;
 
         if (count($args) < 4) {
-            echo "Usage: php script.php <operation> <number1> <number2>" . PHP_EOL;
-            echo "Available operations: " . ECalcOperations::allToString() . PHP_EOL;
+            echo "Використання: <operation> <number1> <number2>" . PHP_EOL;
+            echo "Доступні операції: " . ECalcOperations::allToString() . PHP_EOL;
             exit();
         }
 
@@ -33,7 +33,7 @@ class CalcCliController implements IAllControllersInterface
         try {
             $result = $this->calculatorProcessor->calculate($operation, $number1, $number2);
             $this->resultHandler->handle($operation, $result);
-            echo "Result: " . $result . PHP_EOL;
+            echo "Результат: " . $result . PHP_EOL;
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage() . PHP_EOL;
             exit();

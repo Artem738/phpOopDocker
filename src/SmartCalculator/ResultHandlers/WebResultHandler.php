@@ -2,11 +2,11 @@
 
 namespace App\SmartCalculator\ResultHandlers;
 
-use App\SmartCalculator\Interfaces\INotifierInterface;
+use App\Core\IResultHandlerInterface;
 use App\SmartCalculator\Interfaces\ILoggerInterface;
-use App\SmartCalculator\Interfaces\IResultHandler;
+use App\SmartCalculator\Interfaces\INotifierInterface;
 
-class WebResultHandler implements IResultHandler
+class WebResultHandler implements IResultHandlerInterface
 {
     public function __construct(
         protected INotifierInterface $notifier,

@@ -3,23 +3,23 @@
 namespace App\HTTP\Controllers;
 
 use App\Core\IAllControllersInterface;
+use App\Core\IResultHandlerInterface;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Interfaces\ICalculatorProcessor;
-use App\SmartCalculator\Interfaces\IResultHandler;
 
 class CalcWebController implements IAllControllersInterface
 {
     public function __construct(
-        protected ICalculatorProcessor $controller,
-        protected IResultHandler         $resultHandler,
+        protected ICalculatorProcessor    $controller,
+        protected IResultHandlerInterface $resultHandler,
     ) {
     }
 
     public function handle(array $args): void
     {
         echo EGreetings::bigAppNameWeb->value; //H1
-        // test on "calc" // old
+
         if ($args[0] !== 'calc') {
             echo "Помилка реалізації: Невідомий URL";
             die();

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\SmartCalculator\Interfaces;
+namespace App\Core;
 
 
-interface IResultHandler
+interface IResultHandlerInterface
 {
     public function handle(string $operation, $result): void;
 }
