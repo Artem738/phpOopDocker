@@ -44,5 +44,5 @@ try {
     $routeData = $webRouter->route();
     $controller->dispatch($routeData);
 } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
-    echo "Ошибка: " . $e->getMessage() . PHP_EOL;
+    echo "Помилка: " . $e->getMessage() . PHP_EOL;
 }
