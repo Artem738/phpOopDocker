@@ -31,7 +31,7 @@ class ControllerFactory
      * @throws \ReflectionException
      * @throws \Exception
      */
-    public function createController(string $controllerName, bool $performReflection = false) //: IAllControllersInterface
+    public function createController(string $controllerName, bool $performReflection = false): IAllControllersInterface
     {
 
         switch ($controllerName) {

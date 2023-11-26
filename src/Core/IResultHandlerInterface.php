@@ -5,5 +5,5 @@ namespace App\Core;
 
 interface IResultHandlerInterface
 {
-    public function handle(string $operation, $result): void;
+    public function handle(string $operation, float|int $result): void;
 }

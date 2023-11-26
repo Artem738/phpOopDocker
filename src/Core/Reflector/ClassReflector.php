@@ -11,24 +11,29 @@ class ClassReflector
     /**
      * @throws \ReflectionException
      */
-    public function reflectClasses()
+    public function reflectClasses(): void
     {
         $classes = get_declared_classes();
 
         foreach ($classes as $class) {
-           // if (str_starts_with($class, 'App\\') && !str_starts_with($class, 'App\\Core\\') && !str_starts_with($class, 'App\\HTTP\\')) {
-           if (str_starts_with($class, 'App\\')) {
-           // if (true) {
+            // if (str_starts_with($class, 'App\\') && !str_starts_with($class, 'App\\Core\\') && !str_starts_with($class, 'App\\HTTP\\')) {
+            if (str_starts_with($class, 'App\\')) {
+                // if (true) {
                 $reflector = new ReflectionClass($class);
                 echo "<div style='margin-left: 40px;'>";
                 $this->printClassInfo($reflector);
                 echo "</div>";
 
                 echo "<div style='margin-left: 80px;'>";
+
+
                 // Вывод методов класса по видимости
                 $this->printMethodsInfo($reflector, ReflectionMethod::IS_PUBLIC, "Публічні методи", "blueviolet");
                 $this->printMethodsInfo($reflector, ReflectionMethod::IS_PROTECTED, "Захищені методи", "blue");
                 $this->printMethodsInfo($reflector, ReflectionMethod::IS_PRIVATE, "Приватні методи", "red");
+                $this->printMethodsInfo($reflector, ReflectionMethod::IS_ABSTRACT, "Абстрактні методи", "darkorange");
+                $this->printMethodsInfo($reflector, ReflectionMethod::IS_STATIC, "Статичні методи", "darkorange");
+                $this->printMethodsInfo($reflector, ReflectionMethod::IS_FINAL, "Фінальні методи", "darkorange");
 
 
                 echo "</div><hr>";
@@ -36,10 +41,15 @@ class ClassReflector
         }
     }
 
-    private function printClassInfo($reflector)
+    /**
+     * @param ReflectionClass $reflector
+     */
+    private function printClassInfo(ReflectionClass $reflector): void
     {
-        echo "<strong>Клас:</strong> <a target='_blank' href='" . str_replace($_ENV['WORKDIR'], $_ENV['GITHUB_PATH'], $reflector->getFileName()) . "'>" . $reflector->getName() . "</a><br>";
-        echo "<strong>Фаїл:</strong> " . $reflector->getFileName() . "<br>";
+        if ($reflector->getFileName()) {
+            echo "<strong>Клас:</strong> <a target='_blank' href='" . str_replace($_ENV['WORKDIR'], $_ENV['GITHUB_PATH'], $reflector->getFileName()) . "'>" . $reflector->getName() . "</a><br>";
+            echo "<strong>Фаїл:</strong> " . $reflector->getFileName() . "<br>";
+        }
 
         if ($docComment = $reflector->getDocComment()) {
             echo "<span style='color: green;'><pre>" . htmlspecialchars($docComment) . "</pre></span><br>";
@@ -80,9 +90,11 @@ class ClassReflector
             }
         }
 
-        $inheritedMethods = array_filter($reflector->getMethods(), function ($method) use ($reflector) {
+        $inheritedMethods = array_filter(
+            $reflector->getMethods(), function ($method) use ($reflector) {
             return $method->getDeclaringClass()->getName() !== $reflector->getName();
-        });
+        }
+        );
 
         if (count($inheritedMethods) > 0) {
             echo "<strong style='color: darkmagenta;'>Успадковані методи:</strong><br>";
@@ -96,7 +108,7 @@ class ClassReflector
     }
 
 
-    private function printMethodsInfo($reflector, $filter, $title, $color)
+    private function printMethodsInfo(ReflectionClass $reflector, int $filter, string $title, string $color): void
     {
         $methods = $reflector->getMethods($filter);
 

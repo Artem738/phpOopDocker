@@ -2,10 +2,11 @@
 
 namespace App\HTTP\Controllers;
 
+use App\Core\IAllControllersInterface;
 use App\Core\Router\RouteResultDTO;
 use GuzzleHttp\Client;
 
-class ParsController
+class ParsController implements IAllControllersInterface
 {
     public function handle(RouteResultDTO $routeResult): void
     {

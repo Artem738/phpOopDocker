@@ -47,8 +47,7 @@ class CalcWebController implements IAllControllersInterface
 
         try {
             $result = $this->controller->calculate($operation, $number1, $number2);
-            $this->resultHandler->handle($operation, $result); // Обработка результату
-            echo "Результат операції: " . $result;
+            $this->resultHandler->handle($operation, $result); //
         } catch (\Exception $e) {
             echo "Помилка калькулятора: " . $e->getMessage() . "<br>";
             die();
