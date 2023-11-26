@@ -27,7 +27,7 @@ class WebUrlRouter
         $uriParts = explode('/', trim($uri, '/'));
 
         // 'reflect'
-        if (!empty($uriParts) && $uriParts[0] === 'reflect') {
+        if ($uriParts[0] === 'reflect') {
             array_shift($uriParts); // del 'reflect'
             $uri = '/' . implode('/', $uriParts);
             $foundReflect = true;

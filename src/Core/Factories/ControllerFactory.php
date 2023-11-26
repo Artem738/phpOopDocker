@@ -2,6 +2,7 @@
 
 namespace App\Core\Factories;
 
+use App\Core\IAllControllersInterface;
 use App\Core\Reflector\ClassReflector;
 use App\HTTP\Controllers\AdminController;
 use App\HTTP\Controllers\CalcWebController;
@@ -26,7 +27,11 @@ class ControllerFactory
     ) {
     }
 
-    public function createController(string $controllerName, bool $performReflection = false)
+    /**
+     * @throws \ReflectionException
+     * @throws \Exception
+     */
+    public function createController(string $controllerName, bool $performReflection = false) //: IAllControllersInterface
     {
 
         switch ($controllerName) {
@@ -58,7 +63,7 @@ class ControllerFactory
                 throw new \Exception("Контроллер '$controllerName' не знайдено.");
         }
 
-        if ($performReflection) {
+        if ($this->reflector != null && $performReflection) {
             $this->reflector->reflectClasses();
         }
 
