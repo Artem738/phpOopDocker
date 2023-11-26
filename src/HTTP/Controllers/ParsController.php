@@ -47,11 +47,8 @@ class ParsController
             }
         }
 
-        if (empty($results)) {
-            return [];
-        } else {
-            return $results;
-        }
+        return $results;
+
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\HTTP\Controllers;
 
 use App\Core\IAllControllersInterface;
 use App\Core\IResultHandlerInterface;
+use App\Core\Router\RouteResultDTO;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Enums\EGreetings;
 use App\SmartCalculator\Interfaces\ICalculatorProcessor;
@@ -16,8 +17,10 @@ class CalcWebController implements IAllControllersInterface
     ) {
     }
 
-    public function handle(array $args): void
+    public function handle(RouteResultDTO $routeResult): void
     {
+        $args = $routeResult->uriParts;
+
         echo EGreetings::bigAppNameWeb->value; //H1
 
         if ($args[0] !== 'calc') {
