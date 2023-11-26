@@ -15,6 +15,7 @@ class WebUrlRouter
     {
         $uri = $_SERVER['REQUEST_URI'];
         $queryParams = [];
+        $foundReflect = false;
 
         if (false !== $pos = strpos($uri, '?')) {
             $queryString = substr($uri, $pos + 1);
@@ -23,12 +24,19 @@ class WebUrlRouter
             $uri = substr($uri, 0, $pos);
         }
 
-
         $uriParts = explode('/', trim($uri, '/'));
+
+        // 'reflect'
+        if (!empty($uriParts) && $uriParts[0] === 'reflect') {
+            array_shift($uriParts); // del 'reflect'
+            $uri = '/' . implode('/', $uriParts);
+            $foundReflect = true;
+        }
+
         if (!empty($uriParts)) {
             $uriParts = $this->validator->validateUrlPath($uriParts);
         }
 
-        return new RouteResultDTO($uri, $uriParts, $queryParams);
+        return new RouteResultDTO($uri, $uriParts, $queryParams, $foundReflect);
     }
 }

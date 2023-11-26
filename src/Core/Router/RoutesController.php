@@ -20,7 +20,7 @@ class RoutesController
 
         foreach ($this->routes as $pattern => $controllerName) {
             if (preg_match($pattern, $uri)) {
-                $controller = $this->factory->createController($controllerName);
+                $controller = $this->factory->createController($controllerName, (bool)$routeResult->reflection);
                 $controller->handle($routeResult);
                 return;
             }

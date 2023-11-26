@@ -7,7 +7,8 @@ class RouteResultDTO
     public function __construct(
         public string $uri,
         public array $uriParts,
-        public array $queryParams
+        public array $queryParams,
+        public ?bool $reflection = false,
     ) {
     }
 }

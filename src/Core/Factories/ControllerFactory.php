@@ -2,6 +2,7 @@
 
 namespace App\Core\Factories;
 
+use App\Core\Reflector\ClassReflector;
 use App\HTTP\Controllers\AdminController;
 use App\HTTP\Controllers\CalcWebController;
 use App\HTTP\Controllers\ParsController;
@@ -20,9 +21,14 @@ use ReflectionClass;
 
 class ControllerFactory
 {
+    public function __construct(
+        protected ?ClassReflector $reflector,
+    ) {
+    }
+
     public function createController(string $controllerName, bool $performReflection = false)
     {
-        $performReflection = true;
+
         switch ($controllerName) {
             case CalcWebController::class:
                 $operations = [
@@ -53,35 +59,14 @@ class ControllerFactory
         }
 
         if ($performReflection) {
-            $this->reflectController($controller);
+            $this->reflector->reflectClasses();
         }
 
         return $controller;
     }
 
-    /**
-     * @throws \ReflectionException
-     */
-    private function reflectController()
-    {
-        $classes = get_declared_classes();
 
-        foreach ($classes as $class) {
-            if (str_starts_with($class, 'App\\') && !str_starts_with($class, 'App\\Core\\') && !str_starts_with($class, 'App\\HTTP\\')) {
-                $reflector = new ReflectionClass($class);
 
-                echo "<div style='margin-bottom: 20px;'>";
-                echo "<strong>Клас:</strong> " . $class . "<br>";
-                echo "<strong>Фаіл:</strong> " . $reflector->getFileName() . "<br>";
-                echo "<strong>Методи:</strong><br>";
-
-                foreach ($reflector->getMethods() as $method) {
-                    echo " - " . $method->name . "<br>";
-                }
-                echo "</div><hr>";
-            }
-        }
-    }
 
 
 }
