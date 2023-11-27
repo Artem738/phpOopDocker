@@ -7,11 +7,12 @@ namespace App\Core\Router;
 class WebUrlRouter
 {
     public function __construct(
-        protected WebRouterValidator $validator
+        protected WebRouterValidator $validator,
+        protected string $reflectUrlParam,
     ) {
     }
 
-    public function route()
+    public function route(): RouteResultDTO
     {
         $uri = $_SERVER['REQUEST_URI'];
         $queryParams = [];
@@ -27,7 +28,7 @@ class WebUrlRouter
         $uriParts = explode('/', trim($uri, '/'));
 
         // 'reflect'
-        if ($uriParts[0] === 'reflect') {
+        if ($uriParts[0] === $this->reflectUrlParam) {
             array_shift($uriParts); // del 'reflect'
             $uri = '/' . implode('/', $uriParts);
             $foundReflect = true;

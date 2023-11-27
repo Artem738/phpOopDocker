@@ -8,13 +8,16 @@ use ReflectionClass;
 class RoutesController
 {
 
+    /**
+     * @param array<string> $routes
+     */
     public function __construct(
         protected array             $routes,
         protected ControllerFactory $factory,
     ) {
     }
 
-    public function dispatch(RouteResultDTO $routeResult)
+    public function dispatch(RouteResultDTO $routeResult):void
     {
         $uri = $routeResult->uri;
 
@@ -22,7 +25,7 @@ class RoutesController
             if (preg_match($pattern, $uri)) {
                 $controller = $this->factory->createController($controllerName, (bool)$routeResult->reflection);
                 $controller->handle($routeResult);
-                return;
+                exit(); // end
             }
         }
 

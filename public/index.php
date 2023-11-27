@@ -18,7 +18,7 @@ $dotenv->load();
 
 $routes = require_once __DIR__ . '/../routes/web.php';
 $factory = new ControllerFactory(new ClassReflector());
-$webRouter = new WebUrlRouter(new WebRouterValidator());
+$webRouter = new WebUrlRouter(new WebRouterValidator(),'reflect');
 
 try {
     $routeData = $webRouter->route();
