@@ -63,7 +63,7 @@ class ControllerFactory
                 throw new \Exception("Контроллер '$controllerName' не знайдено.");
         }
 
-        if ($this->reflector != null && $performReflection) {
+        if ($this->reflector && $performReflection) {
             $this->reflector->reflectClasses();
         }
 
