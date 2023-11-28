@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+
 
 
 use App\Core\Factories\ControllerFactory;
@@ -12,13 +12,16 @@ use App\Core\Router\WebUrlRouter;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../config/controllerDependencies.php';
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
-
-$routes = require_once __DIR__ . '/../routes/web.php';
 $factory = new ControllerFactory(new ClassReflector());
+
 $webRouter = new WebUrlRouter(new WebRouterValidator(),'reflect');
+$routes = require_once __DIR__ . '/../routes/web.php';
 
 try {
     $routeData = $webRouter->route();
