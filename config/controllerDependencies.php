@@ -2,6 +2,8 @@
 
 use App\HTTP\Controllers\AdminController;
 use App\HTTP\Controllers\CalcWebController;
+use App\HTTP\Controllers\ShortUrlController;
+use App\HTTP\Controllers\ShortUrlIndexController;
 use App\SmartCalculator\CalculatorProcessor;
 use App\SmartCalculator\Enums\ECalcOperations;
 use App\SmartCalculator\Loggers\FileLogger;
@@ -30,5 +32,16 @@ function createAdminController()
 {
 
     return new AdminController();
+}
+
+function createShortUrlController()
+{
+
+    return new ShortUrlController();
+}
+function createShortUrlIndexController()
+{
+
+    return new ShortUrlIndexController();
 }
 

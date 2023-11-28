@@ -20,12 +20,13 @@ class ControllerFactory
      */
     public function createController(string $controllerName, bool $performReflection = false): IAllControllersInterface
     {
-        $functionName = 'create' . (new ReflectionClass($controllerName))->getShortName();
+        $reflection = new ReflectionClass($controllerName);
+        $functionName = 'create' . $reflection->getShortName();
 
         if (function_exists($functionName)) {
             $controller = $functionName();
         } else {
-            throw new Exception("<br> Функція для створення контролера >>> '$controllerName' <<< не знайдена. <br>");
+            throw new Exception("Функція для створення контролера >>> '$controllerName' <<< не знайдена. ");
         }
 
         if ($this->reflector && $performReflection) {

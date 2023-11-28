@@ -11,5 +11,6 @@ class ShortUrlController implements IAllControllersInterface
     {
 
         echo("ShortUrl under construction");
+        var_dump($routeResult);
     }
 }
